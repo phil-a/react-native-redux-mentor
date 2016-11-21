@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { pupilUpdate } from '../actions';
 import { Card, CardSection, Input, Button } from './common';
 
 class PupilCreate extends Component {
@@ -6,11 +8,21 @@ class PupilCreate extends Component {
     return (
       <Card>
         <CardSection>
-          <Input label="Name" placeholder="John Smith" />
+          <Input
+            label="Name"
+            placeholder="John Smith"
+            value={this.props.name}
+            onChangeText={text => this.props.pupilUpdate({ prop: 'name', value: text })}
+          />
         </CardSection>
 
         <CardSection>
-          <Input label="Phone" placeholder="555-555-5555" />
+          <Input
+            label="Phone"
+            placeholder="555-555-5555"
+            value={this.props.phone}
+            onChangeText={text => this.props.pupilUpdate({ prop: 'phone', value: text })}
+          />
         </CardSection>
 
         <CardSection>
@@ -27,4 +39,9 @@ class PupilCreate extends Component {
   }
 }
 
-export default PupilCreate;
+const mapStateToProps = (state) => {
+  const { name, phone, shift } = state.pupilForm;
+  return {name, phone, shift}
+};
+
+export default connect(mapStateToProps, { pupilUpdate })(PupilCreate);
