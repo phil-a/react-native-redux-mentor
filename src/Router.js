@@ -7,17 +7,21 @@ import PupilList from './components/PupilList';
 const RouterComponent = () => {
   return (
     <Router sceneStyle={styles.navStyle}>
+    <Scene key="auth">
       <Scene
         key="login"
         component={LoginForm}
         title="Please Login"
         initial
       />
+    </Scene>
+    <Scene key="main">
       <Scene
         key = "pupilList"
         component={PupilList}
         title="Pupils"
       />
+    </Scene>
     </Router>
   )
 };

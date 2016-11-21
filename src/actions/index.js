@@ -42,7 +42,7 @@ const loginUserSuccess = (dispatch, user) => {
     type: LOGIN_USER_SUCCESS,
     payload: user
   });
-  Actions.pupilList();
+  Actions.main();
 };
 
 const loginUserFail = (dispatch) => {
