@@ -22,7 +22,6 @@ const RouterComponent = () => {
         title="Pupils"
         rightTitle="Add"
         onRight={() => Actions.pupilCreate()}
-        initial
       />
       <Scene
         key="pupilCreate"
