@@ -1,9 +1,9 @@
 import React from 'react';
 import { Platform } from 'react-native';
-import { Scene, Router } from 'react-native-router-flux';
+import { Scene, Router, Actions } from 'react-native-router-flux';
 import LoginForm from './components/LoginForm';
 import PupilList from './components/PupilList';
-
+import PupilCreate from './components/PupilCreate';
 const RouterComponent = () => {
   return (
     <Router sceneStyle={styles.navStyle}>
@@ -17,9 +17,17 @@ const RouterComponent = () => {
     </Scene>
     <Scene key="main">
       <Scene
-        key = "pupilList"
+        key="pupilList"
         component={PupilList}
         title="Pupils"
+        rightTitle="Add"
+        onRight={() => Actions.pupilCreate()}
+        initial
+      />
+      <Scene
+        key="pupilCreate"
+        component={PupilCreate}
+        title="Create Pupil"
       />
     </Scene>
     </Router>
