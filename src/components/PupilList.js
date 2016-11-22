@@ -1,8 +1,9 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { ListView, View, Text } from 'react-native';
+import { ListView } from 'react-native';
 import { pupilsFetch } from '../actions';
+import PupilListItem from './PupilListItem';
 
 class PupilList extends Component {
 
@@ -23,15 +24,18 @@ class PupilList extends Component {
     this.dataSource = ds.cloneWithRows(pupils);
   }
 
+  renderRow(pupil) {
+    return <PupilListItem pupil={pupil} />;
+  }
+
   render() {
     console.log(this.props);
     return (
-      <View>
-        <Text>Pupil</Text>
-        <Text>Pupil</Text>
-        <Text>Pupil</Text>
-        <Text>Pupil</Text>
-      </View>
+      <ListView
+        enableEmptySections
+        dataSource={this.dataSource}
+        renderRow={this.renderRow}
+      />
     );
   }
 }

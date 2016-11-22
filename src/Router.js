@@ -35,7 +35,7 @@ const RouterComponent = () => {
 
 const styles = {
   navStyle: {
-    paddingTop: Platform.OS === 'ios' ? 60 : 50
+    paddingTop: Platform.OS === 'ios' ? 65 : 54
   }
 };
 
