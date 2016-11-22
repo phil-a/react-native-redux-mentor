@@ -1,5 +1,6 @@
 import {
-  PUPIL_UPDATE
+  PUPIL_UPDATE,
+  PUPIL_CREATE
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -12,6 +13,8 @@ export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case PUPIL_UPDATE:
       return { ...state, [action.payload.prop]: action.payload.value };
+    case PUPIL_CREATE:
+      return { INITIAL_STATE };
     default:
       return state;
   }

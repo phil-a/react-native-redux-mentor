@@ -5,3 +5,4 @@ export const LOGIN_USER_FAIL = 'login_user_fail';
 export const LOGIN_USER = 'login_user';
 
 export const PUPIL_UPDATE = 'pupil_update';
+export const PUPIL_CREATE = 'pupil_create';
