@@ -1,9 +1,16 @@
 import React, { Component } from 'react';
 import { Picker, Text, View } from 'react-native';
 import { connect } from 'react-redux';
-import { pupilUpdate } from '../actions';
+import { pupilUpdate, pupilCreate } from '../actions';
 import { Card, CardSection, Input, Button } from './common';
 class PupilCreate extends Component {
+
+  onButtonPress(){
+    const { name, phone, shift } = this.props;
+
+    this.props.pupilCreate({ name, phone, shift: shift || 'Monday' })
+  }
+
   render() {
     return (
       <Card>
@@ -43,7 +50,7 @@ class PupilCreate extends Component {
         </CardSection>
 
         <CardSection>
-          <Button>
+          <Button onPress={this.onButtonPress.bind(this)}>
             Create Pupil
           </Button>
         </CardSection>
@@ -69,4 +76,4 @@ const mapStateToProps = (state) => {
   return { name, phone, shift }
 };
 
-export default connect(mapStateToProps, { pupilUpdate })(PupilCreate);
+export default connect(mapStateToProps, { pupilUpdate, pupilCreate })(PupilCreate);
