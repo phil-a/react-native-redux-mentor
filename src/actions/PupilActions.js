@@ -3,7 +3,8 @@ import firebase from 'firebase';
 import {
   PUPIL_UPDATE,
   PUPIL_CREATE,
-  PUPILS_FETCH_SUCCESS
+  PUPILS_FETCH_SUCCESS,
+  PUPIL_SAVE_SUCCESS
 } from './types';
 
 export const pupilUpdate = ({ prop, value }) => {
@@ -35,4 +36,17 @@ export const pupilsFetch = () => {
         dispatch({ type: PUPILS_FETCH_SUCCESS, payload: snapshot.val() });
       });
   };
+};
+
+export const pupilSave = ({ name, phone, shift, uid }) => {
+  const { currentUser } = firebase.auth();
+
+  return (dispatch) => {
+    firebase.database().ref(`/users/${currentUser.uid}/pupils/${uid}`)
+      .set({ name, phone, shift })
+      .then(() => {
+        dispatch({ type: PUPIL_SAVE_SUCCESS });
+        Actions.pop();
+      });
+  }
 };
