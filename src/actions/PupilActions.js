@@ -4,7 +4,8 @@ import {
   PUPIL_UPDATE,
   PUPIL_CREATE,
   PUPILS_FETCH_SUCCESS,
-  PUPIL_SAVE_SUCCESS
+  PUPIL_SAVE_SUCCESS,
+  PUPIL_NOT_SAVED
 } from './types';
 
 export const pupilUpdate = ({ prop, value }) => {
@@ -49,4 +50,10 @@ export const pupilSave = ({ name, phone, shift, uid }) => {
         Actions.pop();
       });
   }
+};
+
+export const pupilNotSaved = ({ name, phone, shift }) => {
+  return (dispatch) => {
+    dispatch({ type: PUPIL_NOT_SAVED });
+  };
 };

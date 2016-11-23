@@ -8,3 +8,4 @@ export const PUPIL_UPDATE = 'pupil_update';
 export const PUPIL_CREATE = 'pupil_create';
 export const PUPILS_FETCH_SUCCESS = 'pupils_fetch_success';
 export const PUPIL_SAVE_SUCCESS = 'pupil_save_success';
+export const PUPIL_NOT_SAVED = 'pupil_not_saved';

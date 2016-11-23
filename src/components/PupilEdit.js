@@ -2,7 +2,7 @@ import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PupilForm from './PupilForm';
-import { pupilUpdate, pupilSave } from '../actions';
+import { pupilUpdate, pupilSave, pupilNotSaved } from '../actions';
 import { Card, CardSection, Button } from './common';
 
 class PupilEdit extends Component {
@@ -11,6 +11,11 @@ class PupilEdit extends Component {
     _.each(this.props.pupil, (value, prop) => {
       this.props.pupilUpdate({ prop, value });
     });
+  }
+
+  componentWillUnmount() {
+    const { name, phone, shift } = this.props;
+    this.props.pupilNotSaved({ name, phone, shift });
   }
 
   onButtonPress() {
@@ -38,4 +43,4 @@ const mapStateToProps = (state) => {
   return { name, phone, shift };
 };
 
-export default connect(mapStateToProps, { pupilUpdate, pupilSave })(PupilEdit)
+export default connect(mapStateToProps, { pupilUpdate, pupilSave, pupilNotSaved })(PupilEdit)
