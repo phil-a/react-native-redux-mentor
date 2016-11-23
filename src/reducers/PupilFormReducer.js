@@ -1,7 +1,8 @@
 import {
   PUPIL_UPDATE,
   PUPIL_CREATE,
-  PUPIL_SAVE_SUCCESS
+  PUPIL_SAVE_SUCCESS,
+  PUPIL_NOT_SAVED
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -18,6 +19,8 @@ export default (state = INITIAL_STATE, action) => {
       return { INITIAL_STATE };
     case PUPIL_SAVE_SUCCESS:
         return { INITIAL_STATE };
+    case PUPIL_NOT_SAVED:
+      return { INITIAL_STATE };
     default:
       return state;
   }
