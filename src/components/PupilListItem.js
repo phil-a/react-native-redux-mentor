@@ -6,7 +6,7 @@ import { CardSection } from './common';
 class PupilListItem extends Component {
 
   onRowPress() {
-    Actions.pupilCreate({ pupil: this.props.pupil });
+    Actions.pupilEdit({ pupil: this.props.pupil });
   }
 
   render() {

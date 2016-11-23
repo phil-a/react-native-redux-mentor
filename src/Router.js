@@ -4,6 +4,8 @@ import { Scene, Router, Actions } from 'react-native-router-flux';
 import LoginForm from './components/LoginForm';
 import PupilList from './components/PupilList';
 import PupilCreate from './components/PupilCreate';
+import PupilEdit from './components/PupilEdit';
+
 const RouterComponent = () => {
   return (
     <Router sceneStyle={styles.navStyle}>
@@ -27,6 +29,11 @@ const RouterComponent = () => {
         key="pupilCreate"
         component={PupilCreate}
         title="Create Pupil"
+      />
+      <Scene
+        key="pupilEdit"
+        component={PupilEdit}
+        title="Edit Pupil"
       />
     </Scene>
     </Router>
