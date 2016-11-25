@@ -57,3 +57,15 @@ export const pupilNotSaved = ({ name, phone, shift }) => {
     dispatch({ type: PUPIL_NOT_SAVED });
   };
 };
+
+export const pupilDelete = ({ uid }) => {
+  const { currentUser } = firebase.auth();
+
+  return () => {
+    firebase.database().ref(`/users/${currentUser.uid}/pupils/${uid}`)
+      .remove()
+      .then(() => {
+        Actions.pupilList({ type: 'reset' });
+      });
+  };
+};
