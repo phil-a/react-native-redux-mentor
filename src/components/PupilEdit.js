@@ -3,11 +3,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PupilForm from './PupilForm';
 import { pupilUpdate, pupilSave, pupilNotSaved } from '../actions';
-import { Card, CardSection, Button } from './common';
+import { Card, CardSection, Button, Confirm } from './common';
 import Communications from 'react-native-communications';
 
 class PupilEdit extends Component {
-
+  state = {showModal: false};
   componentWillMount() {
     _.each(this.props.pupil, (value, prop) => {
       this.props.pupilUpdate({ prop, value });
@@ -45,6 +45,16 @@ class PupilEdit extends Component {
             Text Session
           </Button>
         </CardSection>
+        <CardSection>
+          <Button onPress={() => this.setState({ showModal: !this.state.showModal })}>
+            Remove Pupil
+          </Button>
+        </CardSection>
+        <Confirm
+          visible={this.state.showModal}
+        >
+          Are you sure you want to delete this?
+        </Confirm>
       </Card>
     );
   }
