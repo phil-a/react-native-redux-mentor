@@ -42,6 +42,26 @@ class GoalForm extends Component {
           + cat
           </Button>
         </CardSection>
+
+        <CardSection>
+          <Input
+            label="Quantity"
+            placeholder="50"
+            keyboardType="numeric"
+            value={this.props.quantity}
+            onChangeText={value => this.props.goalUpdate({ prop: 'quantity', value })}
+          />
+        </CardSection>
+
+        <CardSection>
+          <Input
+            label="Frequency"
+            placeholder="1"
+            keyboardType="numeric"
+            value={this.props.frequency}
+            onChangeText={value => this.props.goalUpdate({ prop: 'frequency', value })}
+          />
+        </CardSection>
       </View>
     );
   }
@@ -60,9 +80,9 @@ const styles = {
 };
 
 const mapStateToProps = (state) => {
-  const {name, desc, category} = state.goalForm;
+  const {name, desc, category, quantity, frequency} = state.goalForm;
 
-  return { name, desc, category }
+  return { name, desc, category, quantity, frequency }
 };
 
 export default connect(mapStateToProps, { goalUpdate, categoryCreate, goalCategoryCreate })(GoalForm);
