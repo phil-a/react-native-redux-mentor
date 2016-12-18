@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 import { View, Text, Picker } from 'react-native';
 import { connect } from 'react-redux';
-import { goalUpdate } from '../actions';
-import { CardSection, Input } from './common';
+import { goalUpdate, categoryCreate, goalCategoryCreate } from '../actions';
+import { CardSection, Input, Button } from './common';
 
 class GoalForm extends Component {
+  onAddCategoryPress() {
+    this.props.goalCategoryCreate();
+  }
+
   render() {
     return (
       <View>
@@ -33,6 +37,10 @@ class GoalForm extends Component {
             value={this.props.category}
             onChangeText={value => this.props.goalUpdate({ prop: 'category', value })}
           />
+          <Button
+          onPress={this.onAddCategoryPress.bind(this)}>
+          + cat
+          </Button>
         </CardSection>
       </View>
     );
@@ -57,4 +65,4 @@ const mapStateToProps = (state) => {
   return { name, desc, category }
 };
 
-export default connect(mapStateToProps, { goalUpdate })(GoalForm);
+export default connect(mapStateToProps, { goalUpdate, categoryCreate, goalCategoryCreate })(GoalForm);

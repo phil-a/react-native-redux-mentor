@@ -69,3 +69,10 @@ export const goalDelete = ({ uid }) => {
       });
   };
 };
+
+export const goalCategoryCreate = () => {
+  const { currentUser } = firebase.auth();
+  return () => {
+    Actions.categoryCreate();
+  }
+};
