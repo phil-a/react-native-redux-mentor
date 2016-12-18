@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { View, Text, Picker } from 'react-native';
 import { connect } from 'react-redux';
-import { pupilUpdate } from '../actions';
+import { goalUpdate } from '../actions';
 import { CardSection, Input } from './common';
 
-class PupilForm extends Component {
+class GoalForm extends Component {
   render() {
     return (
       <View>
@@ -13,7 +13,7 @@ class PupilForm extends Component {
             label="Name"
             placeholder="John Smith"
             value={this.props.name}
-            onChangeText={value => this.props.pupilUpdate({ prop: 'name', value })}
+            onChangeText={value => this.props.goalUpdate({ prop: 'name', value })}
           />
         </CardSection>
 
@@ -22,7 +22,7 @@ class PupilForm extends Component {
             label="Phone"
             placeholder="555-555-5555"
             value={this.props.phone}
-            onChangeText={value => this.props.pupilUpdate({ prop: 'phone', value })}
+            onChangeText={value => this.props.goalUpdate({ prop: 'phone', value })}
           />
         </CardSection>
 
@@ -30,7 +30,7 @@ class PupilForm extends Component {
           <Text style={styles.pickerLabel}>Select Day</Text>
           <Picker
             selectedValue={this.props.shift}
-            onValueChange={value => this.props.pupilUpdate({ prop: 'shift', value })}
+            onValueChange={value => this.props.goalUpdate({ prop: 'shift', value })}
             style={styles.picker}
           >
             <Picker.Item label="Monday" value="Monday" />
@@ -60,9 +60,9 @@ const styles = {
 };
 
 const mapStateToProps = (state) => {
-  const {name, phone, shift} = state.pupilForm;
+  const {name, phone, shift} = state.goalForm;
 
   return { name, phone, shift }
 };
 
-export default connect(mapStateToProps, { pupilUpdate })(PupilForm);
+export default connect(mapStateToProps, { goalUpdate })(GoalForm);

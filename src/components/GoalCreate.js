@@ -1,25 +1,25 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import { connect } from 'react-redux';
-import { pupilUpdate, pupilCreate } from '../actions';
+import { goalUpdate, goalCreate } from '../actions';
 import { Card, CardSection, Button } from './common';
-import PupilForm from './PupilForm';
+import GoalForm from './GoalForm';
 
-class PupilCreate extends Component {
+class GoalCreate extends Component {
 
   onButtonPress(){
     const { name, phone, shift } = this.props;
 
-    this.props.pupilCreate({ name, phone, shift: shift || 'Monday' })
+    this.props.goalCreate({ name, phone, shift: shift || 'Monday' })
   }
 
   render() {
     return (
       <Card>
-        <PupilForm {...this.props} />
+        <GoalForm {...this.props} />
         <CardSection>
           <Button onPress={this.onButtonPress.bind(this)}>
-            Create Pupil
+            Create Goal
           </Button>
         </CardSection>
       </Card>
@@ -28,8 +28,8 @@ class PupilCreate extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { name, phone, shift } = state.pupilForm;
+  const { name, phone, shift } = state.goalForm;
   return { name, phone, shift }
 };
 
-export default connect(mapStateToProps, { pupilUpdate, pupilCreate })(PupilCreate);
+export default connect(mapStateToProps, { goalUpdate, goalCreate })(GoalCreate);

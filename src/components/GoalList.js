@@ -2,13 +2,13 @@ import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { ListView } from 'react-native';
-import { pupilsFetch } from '../actions';
-import PupilListItem from './PupilListItem';
+import { goalsFetch } from '../actions';
+import GoalListItem from './GoalListItem';
 
-class PupilList extends Component {
+class GoalList extends Component {
 
   componentWillMount() {
-    this.props.pupilsFetch();
+    this.props.goalsFetch();
     this.createDataSource(this.props);
   }
 
@@ -16,16 +16,16 @@ class PupilList extends Component {
     this.createDataSource(nextProps);
   }
 
-  createDataSource({ pupils }) {
+  createDataSource({ goals }) {
     const ds = new ListView.DataSource({
       rowHasChanged: (r1, r2) => r1 !== r2
     });
 
-    this.dataSource = ds.cloneWithRows(pupils);
+    this.dataSource = ds.cloneWithRows(goals);
   }
 
-  renderRow(pupil) {
-    return <PupilListItem pupil={pupil} />;
+  renderRow(goal) {
+    return <GoalListItem goal={goal} />;
   }
 
   render() {
@@ -41,11 +41,11 @@ class PupilList extends Component {
 }
 
 const mapStateToProps = state => {
-  const pupils = _.map(state.pupils, (val, uid) => {
+  const goals = _.map(state.goals, (val, uid) => {
     return { ...val, uid };
   });
 
-  return { pupils };
+  return { goals };
 }
 
-export default connect(mapStateToProps, { pupilsFetch })(PupilList);
+export default connect(mapStateToProps, { goalsFetch })(GoalList);
