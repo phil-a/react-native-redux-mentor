@@ -15,17 +15,17 @@ class GoalEdit extends Component {
   }
 
   componentWillUnmount() {
-    const { name, desc, category } = this.props;
-    this.props.goalNotSaved({ name, desc, category });
+    const { name, desc, category, quantity, frequency } = this.props;
+    this.props.goalNotSaved({ name, desc, category, quantity, frequency });
   }
 
   onButtonPress() {
-    const { name, desc, category} = this.props;
-    this.props.goalSave({ name, desc, category, uid: this.props.goal.uid });
+    const { name, desc, category, quantity, frequency } = this.props;
+    this.props.goalSave({ name, desc, category, quantity, frequency, uid: this.props.goal.uid });
   }
 
   onTextPress() {
-    const { name, desc, category } = this.props;
+    const { name, desc, category, quantity, frequency } = this.props;
     Communications.text('4168988990', `You should probably do ${name} is for ${category}`);
   }
 
@@ -72,9 +72,9 @@ class GoalEdit extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { name, desc, category } = state.goalForm;
+  const { name, desc, category, quantity, frequency } = state.goalForm;
 
-  return { name, desc, category };
+  return { name, desc, category, quantity, frequency };
 };
 
 export default connect(mapStateToProps, { goalUpdate, goalSave, goalNotSaved, goalDelete })(GoalEdit)

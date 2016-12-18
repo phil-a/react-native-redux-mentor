@@ -8,7 +8,9 @@ import {
 const INITIAL_STATE = {
   name: '',
   desc: '',
-  category: ''
+  category: '',
+  quantity: '',
+  frequency: ''
 };
 
 export default (state = INITIAL_STATE, action) => {
