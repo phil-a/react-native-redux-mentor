@@ -15,18 +15,18 @@ class GoalEdit extends Component {
   }
 
   componentWillUnmount() {
-    const { name, phone, shift } = this.props;
-    this.props.goalNotSaved({ name, phone, shift });
+    const { name, desc, category } = this.props;
+    this.props.goalNotSaved({ name, desc, category });
   }
 
   onButtonPress() {
-    const { name, phone, shift } = this.props;
-    this.props.goalSave({ name, phone, shift, uid: this.props.goal.uid });
+    const { name, desc, category} = this.props;
+    this.props.goalSave({ name, desc, category, uid: this.props.goal.uid });
   }
 
   onTextPress() {
-    const { phone, shift } = this.props;
-    Communications.text(phone, `Your upcoming shift is on ${shift}`);
+    const { name, desc, category } = this.props;
+    Communications.text('4168988990', `You should probably do ${name} is for ${category}`);
   }
 
   onAccept() {
@@ -72,9 +72,9 @@ class GoalEdit extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { name, phone, shift } = state.goalForm;
+  const { name, desc, category } = state.goalForm;
 
-  return { name, phone, shift };
+  return { name, desc, category };
 };
 
 export default connect(mapStateToProps, { goalUpdate, goalSave, goalNotSaved, goalDelete })(GoalEdit)

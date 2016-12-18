@@ -11,7 +11,7 @@ class GoalForm extends Component {
         <CardSection>
           <Input
             label="Name"
-            placeholder="John Smith"
+            placeholder="Pushups"
             value={this.props.name}
             onChangeText={value => this.props.goalUpdate({ prop: 'name', value })}
           />
@@ -19,28 +19,20 @@ class GoalForm extends Component {
 
         <CardSection>
           <Input
-            label="Phone"
-            placeholder="555-555-5555"
-            value={this.props.phone}
-            onChangeText={value => this.props.goalUpdate({ prop: 'phone', value })}
+            label="Description"
+            placeholder="I want to be healthy"
+            value={this.props.desc}
+            onChangeText={value => this.props.goalUpdate({ prop: 'desc', value })}
           />
         </CardSection>
 
         <CardSection>
-          <Text style={styles.pickerLabel}>Select Day</Text>
-          <Picker
-            selectedValue={this.props.shift}
-            onValueChange={value => this.props.goalUpdate({ prop: 'shift', value })}
-            style={styles.picker}
-          >
-            <Picker.Item label="Monday" value="Monday" />
-            <Picker.Item label="Tuesday" value="Tuesday" />
-            <Picker.Item label="Wednesday" value="Wednesday" />
-            <Picker.Item label="Thursday" value="Thursday" />
-            <Picker.Item label="Friday" value="Friday" />
-            <Picker.Item label="Saturday" value="Saturday" />
-            <Picker.Item label="Sunday" value="Sunday" />
-          </Picker>
+          <Input
+            label="Category"
+            placeholder="Exercise"
+            value={this.props.category}
+            onChangeText={value => this.props.goalUpdate({ prop: 'category', value })}
+          />
         </CardSection>
       </View>
     );
@@ -60,9 +52,9 @@ const styles = {
 };
 
 const mapStateToProps = (state) => {
-  const {name, phone, shift} = state.goalForm;
+  const {name, desc, category} = state.goalForm;
 
-  return { name, phone, shift }
+  return { name, desc, category }
 };
 
 export default connect(mapStateToProps, { goalUpdate })(GoalForm);

@@ -8,9 +8,9 @@ import GoalForm from './GoalForm';
 class GoalCreate extends Component {
 
   onButtonPress(){
-    const { name, phone, shift } = this.props;
+    const { name, desc, category } = this.props;
 
-    this.props.goalCreate({ name, phone, shift: shift || 'Monday' })
+    this.props.goalCreate({ name, desc, category })
   }
 
   render() {
@@ -28,8 +28,8 @@ class GoalCreate extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { name, phone, shift } = state.goalForm;
-  return { name, phone, shift }
+  const { name, desc, category } = state.goalForm;
+  return { name, desc, category }
 };
 
 export default connect(mapStateToProps, { goalUpdate, goalCreate })(GoalCreate);
