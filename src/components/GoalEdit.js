@@ -1,27 +1,27 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import PupilForm from './PupilForm';
-import { pupilUpdate, pupilSave, pupilNotSaved, pupilDelete } from '../actions';
+import GoalForm from './GoalForm';
+import { goalUpdate, goalSave, goalNotSaved, goalDelete } from '../actions';
 import { Card, CardSection, Button, Confirm } from './common';
 import Communications from 'react-native-communications';
 
-class PupilEdit extends Component {
+class GoalEdit extends Component {
   state = {showModal: false};
   componentWillMount() {
-    _.each(this.props.pupil, (value, prop) => {
-      this.props.pupilUpdate({ prop, value });
+    _.each(this.props.goal, (value, prop) => {
+      this.props.goalUpdate({ prop, value });
     });
   }
 
   componentWillUnmount() {
     const { name, phone, shift } = this.props;
-    this.props.pupilNotSaved({ name, phone, shift });
+    this.props.goalNotSaved({ name, phone, shift });
   }
 
   onButtonPress() {
     const { name, phone, shift } = this.props;
-    this.props.pupilSave({ name, phone, shift, uid: this.props.pupil.uid });
+    this.props.goalSave({ name, phone, shift, uid: this.props.goal.uid });
   }
 
   onTextPress() {
@@ -30,8 +30,8 @@ class PupilEdit extends Component {
   }
 
   onAccept() {
-    const { uid } = this.props.pupil;
-    this.props.pupilDelete({ uid });
+    const { uid } = this.props.goal;
+    this.props.goalDelete({ uid });
   }
 
   onDecline() {
@@ -41,7 +41,7 @@ class PupilEdit extends Component {
   render() {
     return (
       <Card>
-        <PupilForm />
+        <GoalForm />
 
         <CardSection>
           <Button onPress={this.onButtonPress.bind(this)}>
@@ -56,7 +56,7 @@ class PupilEdit extends Component {
         </CardSection>
         <CardSection>
           <Button onPress={() => this.setState({ showModal: !this.state.showModal })}>
-            Remove Pupil
+            Remove Goal
           </Button>
         </CardSection>
         <Confirm
@@ -72,9 +72,9 @@ class PupilEdit extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { name, phone, shift } = state.pupilForm;
+  const { name, phone, shift } = state.goalForm;
 
   return { name, phone, shift };
 };
 
-export default connect(mapStateToProps, { pupilUpdate, pupilSave, pupilNotSaved, pupilDelete })(PupilEdit)
+export default connect(mapStateToProps, { goalUpdate, goalSave, goalNotSaved, goalDelete })(GoalEdit)

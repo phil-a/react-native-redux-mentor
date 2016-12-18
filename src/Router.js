@@ -2,9 +2,9 @@ import React from 'react';
 import { Platform } from 'react-native';
 import { Scene, Router, Actions } from 'react-native-router-flux';
 import LoginForm from './components/LoginForm';
-import PupilList from './components/PupilList';
-import PupilCreate from './components/PupilCreate';
-import PupilEdit from './components/PupilEdit';
+import GoalList from './components/GoalList';
+import GoalCreate from './components/GoalCreate';
+import GoalEdit from './components/GoalEdit';
 
 const RouterComponent = () => {
   return (
@@ -19,21 +19,21 @@ const RouterComponent = () => {
     </Scene>
     <Scene key="main">
       <Scene
-        key="pupilList"
-        component={PupilList}
-        title="Pupils"
+        key="goalList"
+        component={GoalList}
+        title="Goals"
         rightTitle="Add"
-        onRight={() => Actions.pupilCreate()}
+        onRight={() => Actions.goalCreate()}
       />
       <Scene
-        key="pupilCreate"
-        component={PupilCreate}
-        title="Create Pupil"
+        key="goalCreate"
+        component={GoalCreate}
+        title="Create Goal"
       />
       <Scene
-        key="pupilEdit"
-        component={PupilEdit}
-        title="Edit Pupil"
+        key="goalEdit"
+        component={GoalEdit}
+        title="Edit Goal"
       />
     </Scene>
     </Router>
