@@ -5,6 +5,8 @@ import LoginForm from './components/LoginForm';
 import GoalList from './components/GoalList';
 import GoalCreate from './components/GoalCreate';
 import GoalEdit from './components/GoalEdit';
+import CategoryCreate from './components/CategoryCreate';
+
 
 const RouterComponent = () => {
   return (
@@ -34,6 +36,11 @@ const RouterComponent = () => {
         key="goalEdit"
         component={GoalEdit}
         title="Edit Goal"
+      />
+      <Scene
+        key="categoryCreate"
+        component={CategoryCreate}
+        title="Create Category"
       />
     </Scene>
     </Router>
