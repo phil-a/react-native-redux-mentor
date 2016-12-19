@@ -53,11 +53,6 @@ class GoalList extends Component {
         dataSource={this.categorySource}
         renderRow={this.renderCategoryRow}
       />
-        <ListView
-          enableEmptySections
-          dataSource={this.dataSource}
-          renderRow={this.renderRow}
-        />
       </View>
     );
   }
