@@ -58,14 +58,15 @@ export const categoryNotSaved = ({ name }) => {
   };
 };
 
-// export const categoryDelete = ({ uid }) => {
-//   const { currentUser } = firebase.auth();
-//
-//   return () => {
-//     firebase.database().ref(`/users/${currentUser.uid}/goals/${uid}`)
-//       .remove()
-//       .then(() => {
-//         Actions.goalList({ type: 'reset' });
-//       });
-//   };
-// };
+export const categoryDelete = ({ uid }) => {
+  const { currentUser } = firebase.auth();
+
+  // TODO: need to check if goals belonging to category exist before
+  return () => {
+    firebase.database().ref(`/users/${currentUser.uid}/categories/${uid}`)
+      .remove()
+      .then(() => {
+        Actions.pop();
+      });
+  };
+};
