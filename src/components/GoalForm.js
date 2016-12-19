@@ -1,15 +1,43 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
 import { View, Text, Picker } from 'react-native';
 import { connect } from 'react-redux';
-import { goalUpdate, categoryCreate, goalCategoryCreate } from '../actions';
+import { goalUpdate, categoryCreate, goalCategoryCreate, categoriesFetch } from '../actions';
 import { CardSection, Input, Button } from './common';
 
 class GoalForm extends Component {
+
+  componentWillMount() {
+    this.props.categoriesFetch();
+  }
+
   onAddCategoryPress() {
     this.props.goalCategoryCreate();
   }
 
+  renderDefaultItem() {
+    return (
+      <Picker.Item
+        key="0"
+        label="Default"
+        value="Default"
+      />
+    );
+  }
+
+  renderCategoryItems() {
+    const categoryItems = this.props.categories.map((category) => (
+      <Picker.Item
+        key={category.uid}
+        label={category.name}
+        value={category.name}
+      />
+    ));
+    return categoryItems;
+  }
+
   render() {
+    console.log(this.props);
     return (
       <View>
         <CardSection>
@@ -31,15 +59,18 @@ class GoalForm extends Component {
         </CardSection>
 
         <CardSection>
-          <Input
-            label="Category"
-            placeholder="Exercise"
-            value={this.props.category}
-            onChangeText={value => this.props.goalUpdate({ prop: 'category', value })}
-          />
+          <Picker
+            selectedValue={this.props.category}
+            onValueChange={value => this.props.goalUpdate({ prop: 'category', value })}
+            style={styles.picker}
+          >
+            {this.renderDefaultItem()}
+            {this.renderCategoryItems()}
+          </Picker>
           <Button
-          onPress={this.onAddCategoryPress.bind(this)}>
-          + cat
+            onPress={this.onAddCategoryPress.bind(this)}
+          >
+            + cat
           </Button>
         </CardSection>
 
@@ -81,8 +112,10 @@ const styles = {
 
 const mapStateToProps = (state) => {
   const {name, desc, category, quantity, frequency} = state.goalForm;
-
-  return { name, desc, category, quantity, frequency }
+  const categories = _.map(state.categories, (val, uid) => {
+    return { ...val, uid };
+  });
+  return { name, desc, category, quantity, frequency, categories }
 };
 
-export default connect(mapStateToProps, { goalUpdate, categoryCreate, goalCategoryCreate })(GoalForm);
+export default connect(mapStateToProps, { goalUpdate, categoryCreate, goalCategoryCreate, categoriesFetch })(GoalForm);

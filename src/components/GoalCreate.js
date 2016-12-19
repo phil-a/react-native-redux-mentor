@@ -10,7 +10,7 @@ class GoalCreate extends Component {
   onButtonPress(){
     const { name, desc, category, quantity, frequency } = this.props;
 
-    this.props.goalCreate({ name, desc, category, quantity, frequency })
+    this.props.goalCreate({ name, desc, category: category || 'Default', quantity, frequency })
   }
 
   render() {
