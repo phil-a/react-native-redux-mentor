@@ -3,20 +3,20 @@ import { Text, TouchableWithoutFeedback, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { CardSection } from './common';
 
-class GoalListItem extends Component {
+class CategoryListItem extends Component {
 
   onRowPress() {
-    Actions.goalEdit({ goal: this.props.goal });
+    Actions.categoryEdit({ category: this.props.category });
   }
 
   render() {
-    const { name, category } = this.props.goal;
+    const { name } = this.props.category;
     return (
       <TouchableWithoutFeedback onPress={this.onRowPress.bind(this)}>
         <View>
           <CardSection>
             <Text style={styles.titleStyle}>
-              { category } - {name}
+              { name }
             </Text>
           </CardSection>
         </View>
@@ -32,4 +32,4 @@ const styles = {
   }
 }
 
-export default GoalListItem;
+export default CategoryListItem;
