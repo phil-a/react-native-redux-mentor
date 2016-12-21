@@ -1,10 +1,11 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Text, TouchableWithoutFeedback, TouchableOpacity, View} from 'react-native';
+import { Text, TouchableWithoutFeedback, TouchableOpacity, View, StyleSheet} from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { goalsFetch } from '../actions';
 import { Card, CardSection, Button } from './common';
+import Grid from 'react-native-grid-component';
 
 class CategoryListItem extends Component {
 
@@ -18,6 +19,15 @@ class CategoryListItem extends Component {
 
   onGoalPress(goal) {
     Actions.goalEdit({ goal: goal });
+  }
+
+  _renderItem = (data: any, i: number) => {
+    return (
+      <View style={[{ backgroundColor: 'orange' }, styles.item]} key={i}>
+        <Text>{data.name}</Text>
+        <TouchableOpacity onPress={() => this.onGoalPress(data)}><Text>Edit</Text></TouchableOpacity>
+      </View>
+    );
   }
 
   renderGoal(goal, index) {
@@ -35,12 +45,6 @@ class CategoryListItem extends Component {
     );
   }
 
-  renderGoalsForCategory() {
-    return this.props.goals.map((goal, index, array) => (
-      (goal.category===this.props.category.name) ? this.renderGoal(goal, index) : null
-    ));
-  }
-
   renderCategory() {
     const { name } = this.props.category;
     return (
@@ -56,9 +60,27 @@ class CategoryListItem extends Component {
 
   render() {
     return (
+      <TouchableWithoutFeedback onPress={this.onRowPress.bind(this)}>
+        <View style={styles.categoryRowStyle}>
+          <Text style={styles.titleStyle}>
+            { name }
+          </Text>
+        </View>
+      </TouchableWithoutFeedback>
+    );
+  }
+
+  render() {
+    return (
       <Card>
         {this.renderCategory()}
-        {this.renderGoalsForCategory()}
+        <Grid
+          style={styles.list}
+          renderItem={this._renderItem}
+          data={this.props.goals.filter((goal) => goal.category == this.props.category.name)}
+          itemsPerRow={2}
+          itemHasChanged={(d1, d2) => d1 !== d2}
+        />
       </Card>
     );
   }
@@ -96,6 +118,14 @@ const styles = {
     flexDirection: 'row',
     backgroundColor: '#007aff',
     padding: 15,
+  },
+  item: {
+    flex: 1,
+    height: 160,
+    margin: 1,
+  },
+  list: {
+    flex: 1,
   },
 }
 
