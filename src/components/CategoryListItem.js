@@ -9,15 +9,6 @@ import Grid from 'react-native-grid-component';
 
 class CategoryListItem extends Component {
 
-  state: {data: Array<any>};
-
-  constructor(props: Object) {
-    super(props);
-    this.state = {
-      data: this.props.goals.filter((goal) => goal.category == this.props.category.name),
-    };
-  }
-
   componentWillMount() {
     this.props.goalsFetch();
   }
@@ -74,8 +65,8 @@ class CategoryListItem extends Component {
         <Grid
           style={styles.list}
           renderItem={this._renderItem}
-          data={this.state.data}
-          itemsPerRow={1}
+          data={this.props.goals.filter((goal) => goal.category == this.props.category.name)}
+          itemsPerRow={2}
           itemHasChanged={(d1, d2) => d1 !== d2}
         />
       </Card>
@@ -124,17 +115,6 @@ const styles = {
   list: {
     flex: 1,
   },
-}
-
-const colors = [
-  '#F44336', '#E91E63', '#9C27B0', '#673AB7', '#3F51B5',
-  '#2196F3', '#03A9F4', '#00BCD4', '#009688', '#4CAF50',
-  '#8BC34A', '#CDDC39', '#FFEB3B', '#FFC107', '#FF9800',
-  '#FF5722', '#795548', '#9E9E9E', '#607D8B',
-];
-
-function generateRandomColorsArray(length) {
-  return Array.from(Array(length)).map(() => colors[Math.floor(Math.random() * colors.length)]);
 }
 
 const mapStateToProps = state => {
