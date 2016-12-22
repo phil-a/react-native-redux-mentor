@@ -3870,6 +3870,10 @@ react-native-experimental-navigation@0.26.x:
     fbjs "^0.8.1"
     react-addons-pure-render-mixin "^15.0.2"
 
+react-native-flip-card@^3.3.1:
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/react-native-flip-card/-/react-native-flip-card-3.3.1.tgz#bf3300f8e8a9deba3821ea3e3b830c1f1bae324d"
+
 react-native-grid-component@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/react-native-grid-component/-/react-native-grid-component-1.0.3.tgz#8f22d0f452ec61ad3424fa4369f821c598917ccf"

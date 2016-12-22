@@ -1,11 +1,12 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Text, TouchableWithoutFeedback, TouchableOpacity, View, StyleSheet} from 'react-native';
+import { Text, TouchableWithoutFeedback, TouchableOpacity, View, StyleSheet, Image} from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { goalsFetch } from '../actions';
 import { Card, CardSection, Button } from './common';
 import Grid from 'react-native-grid-component';
+import FlipCard from 'react-native-flip-card'
 
 class CategoryListItem extends Component {
 
@@ -23,24 +24,55 @@ class CategoryListItem extends Component {
 
   _renderItem = (data: any, i: number) => {
     return (
-      <View style={[{ backgroundColor: 'orange' }, styles.item]} key={i}>
-        <Text>{data.name}</Text>
-        <TouchableOpacity onPress={() => this.onGoalPress(data)}><Text>Edit</Text></TouchableOpacity>
-      </View>
+      <FlipCard
+        key={i}
+        style={styles.item}
+        friction={25}
+        perspective={200}
+        flipHorizontal={true}
+        flipVertical={true}
+        flip={false}
+        clickable={true}
+        onFlipped={(isFlipped)=>{console.log('isFlipped', isFlipped)}}
+      >
+      {this._renderFront(data)}
+      {this._renderBack(data)}
+      </FlipCard>
     );
   }
 
-  renderGoal(goal, index) {
+  _renderFront(data) {
     return (
-      <View key={goal.uid} style={styles.goalRowStyle}>
-        <View style={styles.goalTextWrapper}>
-          <Text style={styles.goalTextStyle}>
-            {goal.name}
-          </Text>
+      <Image
+      style={styles.goalImage}
+      resizeMode='cover'
+      source={{uri: 'https://lh3.googleusercontent.com/6Wy8-iSfaJhcbzym-vMOd6l2393bDmaJKOBUqYtO6pjvi3ZfHVGe41IWmVOF6nnZr64DWCzkLQ=s640-h400-e365'}}
+      >
+        <View style={styles.face}>
+          <Text style={styles.goalName}>{data.name}</Text>
+          <View style={styles.goalSpace}>
+            <Text style={styles.goalTime}>{data.quantity} every {data.frequency} days</Text>
+          </View>
+          <Text style={styles.goalDesc}>{data.desc}</Text>
         </View>
-        <View style={styles.editButtonStyle}>
-          <Button onPress={() => this.onGoalPress(goal)}>Edit</Button>
+      </Image>
+    );
+  }
+
+  _renderBack(data) {
+    return (
+      <View style={styles.back}>
+        <View style={styles.backSection}>
+          <TouchableOpacity  style={styles.goalCornerButton} onPress={() => console.log("View pressed")}><Text style={styles.goalView}>View</Text></TouchableOpacity>
+          <TouchableOpacity  style={styles.goalCornerButton} onPress={() => this.onGoalPress(data)}><Text style={styles.goalEdit}>Edit</Text></TouchableOpacity>
         </View>
+        <View style={styles.backSection}>
+          <TouchableOpacity  style={styles.goalCompleteButton} onPress={() => console.log("Complete pressed")}><Text style={styles.goalComplete}>Complete</Text></TouchableOpacity>
+        </View>
+
+        <View style={styles.backSection}>
+        </View>
+
       </View>
     );
   }
@@ -50,19 +82,7 @@ class CategoryListItem extends Component {
     return (
       <TouchableWithoutFeedback onPress={this.onRowPress.bind(this)}>
         <View style={styles.categoryRowStyle}>
-          <Text style={styles.titleStyle}>
-            { name }
-          </Text>
-        </View>
-      </TouchableWithoutFeedback>
-    );
-  }
-
-  render() {
-    return (
-      <TouchableWithoutFeedback onPress={this.onRowPress.bind(this)}>
-        <View style={styles.categoryRowStyle}>
-          <Text style={styles.titleStyle}>
+          <Text style={styles.categoryTitle}>
             { name }
           </Text>
         </View>
@@ -87,31 +107,11 @@ class CategoryListItem extends Component {
 }
 
 const styles = {
-  titleStyle: {
+  categoryTitle: {
     fontSize: 18,
     fontWeight: '600',
     color: 'white',
     paddingLeft: 15
-  },
-  goalRowStyle:{
-    padding: 15,
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center'
-  },
-  goalTextWrapper: {
-    flex: 6,
-  },
-  goalTextStyle: {
-    fontSize: 15,
-    paddingLeft: 15
-  },
-  editButtonStyle: {
-    flex: 1,
-  },
-  editTextStyle: {
-    flex: 1,
-    alignSelf: 'center'
   },
   categoryRowStyle: {
     flex: 1,
@@ -123,10 +123,82 @@ const styles = {
     flex: 1,
     height: 160,
     margin: 1,
+    backgroundColor: 'rgba(0,122,255, 0.15)',
+    borderWidth: 0,
+    borderColor: '#007aff'
   },
   list: {
     flex: 1,
   },
+  face:{
+    flex: 1,
+    justifyContent: 'space-between',
+    backgroundColor: 'rgba(0,0,0,0.6)'
+  },
+  back:{
+    flex: 1,
+    justifyContent: 'space-between',
+    backgroundColor: 'rgba(0,0,0,0.6)'
+  },
+  backSection: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  goalName: {
+    fontSize: 20,
+    textAlign: 'center',
+    color: 'rgba(255,255,255,0.6)'
+  },
+  goalCornerButton: {
+    flex: 1,
+    height: 40,
+  },
+  goalCompleteButton: {
+    flex: 1,
+  },
+  goalView: {
+    flex: 1,
+    textAlign: 'left',
+    fontSize: 18,
+    color: 'rgba(255,255,255,0.6)',
+    padding: 5,
+    backgroundColor: 'rgba(0,122,255, 0.15)'
+  },
+  goalEdit: {
+    flex: 1,
+    textAlign: 'right',
+    fontSize: 18,
+    color: 'rgba(255,255,255,0.6)',
+    padding: 5,
+    backgroundColor: 'rgba(0,122,255, 0.15)'
+  },
+  goalComplete: {
+    flex: 1,
+    textAlign: 'center',
+    fontSize: 18,
+    color: 'rgba(255,255,255,0.6)',
+    padding: 5,
+    backgroundColor: 'rgba(0,255,122, 0.15)'
+  },
+  goalTime: {
+    textAlign: 'center',
+    color: 'rgba(255,255,255,0.6)'
+  },
+  goalSpace: {
+    flex: 1,
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+    borderColor: 'rgba(255,255,255,0.25)',
+  },
+  goalDesc: {
+    textAlign: 'center',
+    color: 'rgba(255,255,255,0.6)'
+  },
+  goalImage: {
+    width: null,
+    height: 160
+  }
 }
 
 const mapStateToProps = state => {
