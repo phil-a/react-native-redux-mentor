@@ -29,6 +29,7 @@ export const goalCreate = ({ name, desc, category, quantity, frequency }) => {
 };
 
 export const goalsFetch = () => {
+  debugger;
   const { currentUser } = firebase.auth();
 
   return (dispatch) => {

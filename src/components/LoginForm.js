@@ -1,9 +1,21 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Text } from 'react-native';
-import { emailChanged, passwordChanged, loginUser } from '../actions';
+import { emailChanged, passwordChanged, loginUser, reauthUserSuccess } from '../actions';
 import { Card, CardSection, Input, Button, Spinner } from './common';
+import { Actions } from 'react-native-router-flux';
+import firebase from 'firebase';
+
 class LoginForm extends Component {
+
+  componentWillMount() {
+    if (this.props.authenticated) {
+      debugger;
+      this.props.reauthUserSuccess(this.props.user)
+      Actions.main({ type: 'reset' });
+    }
+  }
+
   onEmailChange(text) {
     this.props.emailChanged(text);
   }
@@ -79,9 +91,9 @@ const styles = {
 };
 
 const mapStateToProps = ({ auth }) => {
-  const { email, password, error, loading } = auth;
+  const { email, password, error, loading, authenticated, user } = auth;
 
-  return { email, password, error, loading };
+  return { email, password, error, loading, authenticated, user };
 };
 
-export default connect(mapStateToProps, { emailChanged, passwordChanged, loginUser })(LoginForm);
+export default connect(mapStateToProps, { emailChanged, passwordChanged, loginUser, reauthUserSuccess  })(LoginForm);
