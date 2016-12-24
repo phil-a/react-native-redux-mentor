@@ -1,43 +1,41 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
-import { View, Text, Picker } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { goalUpdate, categoryCreate, goalCategoryCreate, categoriesFetch } from '../actions';
 import { CardSection, Input, Button } from './common';
+import ModalPicker from 'react-native-modal-picker';
 
 class GoalForm extends Component {
 
+  constructor() {
+      super();
+      this.state = {
+          categoryInputValue: ''
+      }
+  }
   componentWillMount() {
     this.props.categoriesFetch();
+    this.setState({categoryInputValue: this.props.category || "Select Category"});
   }
 
   onAddCategoryPress() {
     this.props.goalCategoryCreate();
   }
 
-  renderDefaultItem() {
-    return (
-      <Picker.Item
-        key="0"
-        label="Default"
-        value="Default"
-      />
-    );
+  mapCategoryData(category, category_data) {
+   const data = {key: category.uid, label: category.name}
+   return category_data.push(data)
   }
 
-  renderCategoryItems() {
-    const categoryItems = this.props.categories.map((category) => (
-      <Picker.Item
-        key={category.uid}
-        label={category.name}
-        value={category.name}
-      />
-    ));
-    return categoryItems;
+  onPressCategory(value) {
+    this.props.goalUpdate({ prop: 'category', value: value.label })
+    this.setState({ categoryInputValue: value.label })
   }
 
   render() {
-    console.log(this.props);
+    var category_data = [];
+    this.props.categories.map((category) => this.mapCategoryData(category, category_data));
     return (
       <View>
         <CardSection>
@@ -59,19 +57,22 @@ class GoalForm extends Component {
         </CardSection>
 
         <CardSection>
-          <Picker
-            selectedValue={this.props.category}
-            onValueChange={value => this.props.goalUpdate({ prop: 'category', value })}
+        <View style={styles.categoryRowStyle}>
+          <Text style={styles.pickerLabel}>Category</Text>
+          <ModalPicker
+            data={category_data}
+            onChange={value => this.onPressCategory(value)}
             style={styles.picker}
           >
-            {this.renderDefaultItem()}
-            {this.renderCategoryItems()}
-          </Picker>
-          <Button
-            onPress={this.onAddCategoryPress.bind(this)}
-          >
-            + cat
-          </Button>
+          <Text style={styles.pickerText}>{this.state.categoryInputValue}</Text>
+          </ModalPicker>
+            <TouchableOpacity
+              onPress={this.onAddCategoryPress.bind(this)}
+              style={styles.addCategoryButton}
+            >
+              <Text style={styles.addCategoryText}>+</Text>
+            </TouchableOpacity>
+        </View>
         </CardSection>
 
         <CardSection>
@@ -99,14 +100,35 @@ class GoalForm extends Component {
 }
 
 const styles = {
+  categoryRowStyle: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
   picker: {
-    width: 200,
-    marginLeft: 10
+    borderRadius: 5,
+    backgroundColor: 'white',
+    borderColor: '#007aff',
+    borderWidth: 1
   },
   pickerLabel: {
     fontSize: 18,
-    paddingLeft: 20,
-    paddingTop: 10
+    paddingHorizontal: 20,
+    paddingVertical: 10
+  },
+  pickerText: {
+    color: '#007aff',
+    fontSize: 18,
+    paddingHorizontal: 20,
+    paddingVertical: 10
+  },
+  addCategoryButton: {
+    width: 40
+  },
+  addCategoryText: {
+    backgroundColor: 'transparent',
+    fontSize: 24,
+    padding: 5
   }
 };
 
