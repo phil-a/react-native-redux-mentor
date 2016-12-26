@@ -1,19 +1,18 @@
+import {REHYDRATE} from 'redux-persist/constants'
+
 import {
   EMAIL_CHANGED,
   PASSWORD_CHANGED,
   LOGIN_USER_SUCCESS,
   LOGIN_USER_FAIL,
   LOGIN_USER,
-  REHYDRATE,
-  REAUTH_USER_SUCCESS
 } from '../actions/types';
 
 const INITIAL_STATE = {
 email: '',
 password: '',
 user: null,
-loading: false,
-authenticated: false
+loading: false
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -26,13 +25,18 @@ export default (state = INITIAL_STATE, action) => {
     case LOGIN_USER:
       return { ...state, loading: true, error: '' };
     case LOGIN_USER_SUCCESS:
-      return { ...state, ...INITIAL_STATE, user: action.payload, authenticated: true };
+      return { ...state, ...INITIAL_STATE, user: action.payload.user, email: action.payload.email, password: action.payload.password };
     case LOGIN_USER_FAIL:
       return { ...state, error: 'Authentication Failed.', password: '', loading: false };
     case REHYDRATE:
-      return { ...state, ...INITIAL_STATE, user: action.payload.auth.user, authenticated: true };
-    case REAUTH_USER_SUCCESS:
-      return { ...state, user: action.payload}
+      var incoming = action.payload.auth
+      if (incoming) return {
+        ...state,
+        user: incoming.user,
+        email: incoming.email,
+        password: incoming.password,
+      };
+      return state;
     default:
       return state;
   };

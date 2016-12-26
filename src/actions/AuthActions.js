@@ -5,9 +5,7 @@ import {
   PASSWORD_CHANGED,
   LOGIN_USER_SUCCESS,
   LOGIN_USER_FAIL,
-  LOGIN_USER,
-  RENEW_TOKEN,
-  REAUTH_USER_SUCCESS
+  LOGIN_USER
 } from './types'
 
 export const emailChanged = (text) => {
@@ -24,47 +22,28 @@ export const passwordChanged = (text) => {
   };
 };
 
-export const loginUser = ({ email, password }) => {
+export const loginUser = (email, password) => {
   return (dispatch) => {
-
     dispatch({ type: LOGIN_USER });
 
     firebase.auth().signInWithEmailAndPassword(email, password)
-      .then(user => loginUserSuccess(dispatch, user))
+      .then(user => loginUserSuccess(dispatch, { user, email, password } ))
       .catch(() => {
         firebase.auth().createUserWithEmailAndPassword(email, password)
-          .then(user => loginUserSuccess(dispatch, user))
+          .then(user => loginUserSuccess(dispatch, { user, email, password } ))
           .catch(() => loginUserFail(dispatch));
       });
   };
 };
 
-const loginUserSuccess = (dispatch, user) => {
+const loginUserSuccess = (dispatch, authObj) => {
   dispatch({
     type: LOGIN_USER_SUCCESS,
-    payload: user
+    payload: authObj
   });
-  Actions.main();
-};
-
-export const reauthUserSuccess = (user) => {
-  return {
-    type: REAUTH_USER_SUCCESS,
-    payload: user
-  }
   Actions.main();
 };
 
 const loginUserFail = (dispatch) => {
   dispatch({ type: LOGIN_USER_FAIL });
 };
-
-export function renewToken(user) {
-  return (dispatch) => {
-    dispatch({
-      type: RENEW_TOKEN,
-      payload: { user }
-    });
-    reauthUserSuccess(dispatch, user);
-  };
-}

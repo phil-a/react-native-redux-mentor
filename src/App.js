@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
-import { AsyncStorage, AppState } from 'react-native';
+import { AsyncStorage } from 'react-native';
 import { Provider, connect } from 'react-redux';
 import { persistStore } from 'redux-persist';
 import configureStore from './store/configureStore';
-import { renewToken } from './actions/AuthActions';
+import { loginUser } from './actions/AuthActions';
 import firebase from 'firebase';
 import Config from 'react-native-config';
 import Router from './Router';
 
 const RouterWithRedux = connect()(Router);
-const store = configureStore();
+const store = configureStore(this.state);
 
 class App extends Component {
 
@@ -27,12 +27,11 @@ class App extends Component {
       store,
       {
         storage: AsyncStorage,
-        whitelist: ['auth']
+        whitelist: ['auth', 'goals', 'categories']
       },
       () => { this.setState({ rehydrated: true }); }
     );
 
-    AppState.addEventListener('change', () => this.handleAppLoaded(AppState.currentState));
 
     const firebase_config = {
     apiKey: Config.FIREBASE_API_KEY,
@@ -45,21 +44,9 @@ class App extends Component {
     firebase.initializeApp(firebase_config);
   }
 
-  componentWillUnmount() {
-    AppState.removeEventListener('change', () => this.handleAppLoaded(AppState.currentState));
-  }
-
-  handleAppLoaded(state) {
-    if (state === 'active') {
-      store.dispatch(renewToken(store.getState()));
-    }
-    return null;
-  }
-
   render() {
     if (!this.state.rehydrated)
           return null;
-    this.handleAppLoaded(AppState.currentState);
 
     return (
       <Provider store={store}>

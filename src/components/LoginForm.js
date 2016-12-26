@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Text } from 'react-native';
-import { emailChanged, passwordChanged, loginUser, reauthUserSuccess } from '../actions';
+import { emailChanged, passwordChanged, loginUser } from '../actions';
 import { Card, CardSection, Input, Button, Spinner } from './common';
 import { Actions } from 'react-native-router-flux';
 import firebase from 'firebase';
@@ -9,10 +9,8 @@ import firebase from 'firebase';
 class LoginForm extends Component {
 
   componentWillMount() {
-    if (this.props.authenticated) {
-      debugger;
-      this.props.reauthUserSuccess(this.props.user)
-      Actions.main({ type: 'reset' });
+    if (this.props.user) {
+      this.props.loginUser(this.props.email, this.props.password);
     }
   }
 
@@ -26,8 +24,11 @@ class LoginForm extends Component {
 
   onButtonPress() {
     const { email, password } = this.props;
-
-    this.props.loginUser({ email, password });
+    const credential = firebase.auth.EmailAuthProvider.credential(
+        email,
+        password
+    );
+    this.props.loginUser(email, password);
   }
 
   renderSpinner(){
@@ -91,9 +92,9 @@ const styles = {
 };
 
 const mapStateToProps = ({ auth }) => {
-  const { email, password, error, loading, authenticated, user } = auth;
+  const { email, password, error, loading, user } = auth;
 
-  return { email, password, error, loading, authenticated, user };
+  return { email, password, error, loading, user };
 };
 
-export default connect(mapStateToProps, { emailChanged, passwordChanged, loginUser, reauthUserSuccess  })(LoginForm);
+export default connect(mapStateToProps, { emailChanged, passwordChanged, loginUser })(LoginForm);
