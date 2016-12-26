@@ -6,7 +6,8 @@ import {
 } from '../actions/types';
 
 const INITIAL_STATE = {
-  name: ''
+  name: '',
+  color: null
 };
 
 export default (state = INITIAL_STATE, action) => {

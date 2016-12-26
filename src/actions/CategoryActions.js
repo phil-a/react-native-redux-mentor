@@ -15,12 +15,12 @@ export const categoryUpdate = ({ prop, value }) => {
   };
 };
 
-export const categoryCreate = ({ name }) => {
+export const categoryCreate = ({ name, color }) => {
   const { currentUser } = firebase.auth();
 
   return (dispatch) => {
     firebase.database().ref(`/users/${currentUser.uid}/categories`)
-      .push({ name })
+      .push({ name, color })
       .then(() => {
         dispatch({ type: CATEGORY_CREATE });
         Actions.pop();
@@ -39,12 +39,11 @@ export const categoriesFetch = () => {
   };
 };
 
-export const categorySave = ({ name, uid }) => {
+export const categorySave = ({ name, color, uid }) => {
   const { currentUser } = firebase.auth();
-
   return (dispatch) => {
     firebase.database().ref(`/users/${currentUser.uid}/categories/${uid}`)
-      .set({ name })
+      .set({ name, color })
       .then(() => {
         dispatch({ type: CATEGORY_SAVE_SUCCESS });
         Actions.pop();

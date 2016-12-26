@@ -8,9 +8,9 @@ import CategoryForm from './CategoryForm';
 class CategoryCreate extends Component {
 
   onButtonPress(){
-    const { name } = this.props;
+    const { name, color } = this.props;
 
-    this.props.categoryCreate({ name })
+    this.props.categoryCreate({ name, color })
   }
 
   render() {
@@ -29,8 +29,8 @@ class CategoryCreate extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { name } = state.categoryForm;
-  return { name }
+  const { name, color } = state.categoryForm;
+  return { name, color }
 };
 
 export default connect(mapStateToProps, {categoryUpdate, categoryCreate})(CategoryCreate);

@@ -14,6 +14,12 @@ class CategoryListItem extends Component {
     this.props.goalsFetch();
   }
 
+  colorStyle = function(color) {
+    return {
+      backgroundColor: color,
+    }
+  }
+
   onRowPress() {
     Actions.categoryEdit({ category: this.props.category });
   }
@@ -78,12 +84,12 @@ class CategoryListItem extends Component {
   }
 
   renderCategory() {
-    const { name } = this.props.category;
+    const { name, color } = this.props.category;
     return (
       <TouchableWithoutFeedback onPress={this.onRowPress.bind(this)}>
-        <View style={styles.categoryRowStyle}>
+        <View style={[styles.categoryRowStyle, this.colorStyle(color)]}>
           <Text style={styles.categoryTitle}>
-            { name }
+            { name } { color }
           </Text>
         </View>
       </TouchableWithoutFeedback>
@@ -116,7 +122,6 @@ const styles = {
   categoryRowStyle: {
     flex: 1,
     flexDirection: 'row',
-    backgroundColor: '#007aff',
     padding: 15,
   },
   item: {
