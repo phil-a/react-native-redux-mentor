@@ -17,6 +17,7 @@ class CategoryListItem extends Component {
   colorStyle = function(color) {
     return {
       backgroundColor: color,
+      borderColor: color
     }
   }
 
@@ -32,7 +33,7 @@ class CategoryListItem extends Component {
     return (
       <FlipCard
         key={i}
-        style={styles.item}
+        style={[styles.item, this.colorStyle(this.props.category.color)]}
         friction={25}
         perspective={200}
         flipHorizontal={true}
@@ -127,10 +128,8 @@ const styles = {
   item: {
     flex: 1,
     height: 160,
-    margin: 1,
-    backgroundColor: 'rgba(0,122,255, 0.15)',
-    borderWidth: 0,
-    borderColor: '#007aff'
+    margin: 5,
+    borderWidth: 5,
   },
   list: {
     flex: 1,
@@ -138,22 +137,22 @@ const styles = {
   face:{
     flex: 1,
     justifyContent: 'space-between',
-    backgroundColor: 'rgba(0,0,0,0.6)'
+    backgroundColor: 'rgba(0,0,0,0.6)',
   },
   back:{
     flex: 1,
     justifyContent: 'space-between',
-    backgroundColor: 'rgba(0,0,0,0.6)'
+    backgroundColor: 'rgba(0,0,0,0.6)',
   },
   backSection: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   goalName: {
     fontSize: 20,
     textAlign: 'center',
-    color: 'rgba(255,255,255,0.6)'
+    color: 'rgba(255,255,255,0.6)',
   },
   goalCornerButton: {
     flex: 1,
@@ -168,7 +167,7 @@ const styles = {
     fontSize: 18,
     color: 'rgba(255,255,255,0.6)',
     padding: 5,
-    backgroundColor: 'rgba(0,122,255, 0.15)'
+    backgroundColor: 'rgba(0,0,0,0)',
   },
   goalEdit: {
     flex: 1,
@@ -176,7 +175,7 @@ const styles = {
     fontSize: 18,
     color: 'rgba(255,255,255,0.6)',
     padding: 5,
-    backgroundColor: 'rgba(0,122,255, 0.15)'
+    backgroundColor: 'rgba(0,0,0,0)',
   },
   goalComplete: {
     flex: 1,
@@ -184,11 +183,11 @@ const styles = {
     fontSize: 18,
     color: 'rgba(255,255,255,0.6)',
     padding: 5,
-    backgroundColor: 'rgba(0,255,122, 0.15)'
+    backgroundColor: 'rgba(0,0,0,0.15)',
   },
   goalTime: {
     textAlign: 'center',
-    color: 'rgba(255,255,255,0.6)'
+    color: 'rgba(255,255,255,0.6)',
   },
   goalSpace: {
     flex: 1,
@@ -198,11 +197,11 @@ const styles = {
   },
   goalDesc: {
     textAlign: 'center',
-    color: 'rgba(255,255,255,0.6)'
+    color: 'rgba(255,255,255,0.6)',
   },
   goalImage: {
     width: null,
-    height: 160
+    height: 150,
   }
 }
 
