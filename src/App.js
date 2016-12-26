@@ -3,7 +3,6 @@ import { AsyncStorage } from 'react-native';
 import { Provider, connect } from 'react-redux';
 import { persistStore } from 'redux-persist';
 import configureStore from './store/configureStore';
-import { loginUser } from './actions/AuthActions';
 import firebase from 'firebase';
 import Config from 'react-native-config';
 import Router from './Router';
@@ -13,13 +12,13 @@ const store = configureStore(this.state);
 
 class App extends Component {
 
-    constructor() {
-      super();
-      this.state = {
-        rehydrated: false,
-        store
-      };
-    }
+  constructor() {
+    super();
+    this.state = {
+      rehydrated: false,
+      store
+    };
+  }
 
   componentDidMount() {
 
