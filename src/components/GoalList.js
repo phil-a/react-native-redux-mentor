@@ -8,7 +8,6 @@ import CategoryListItem from './CategoryListItem';
 
 
 class GoalList extends Component {
-
   componentWillMount() {
     this.props.goalsFetch();
     this.props.categoriesFetch();
@@ -40,12 +39,10 @@ class GoalList extends Component {
   }
 
   renderCategoryRow(category) {
-    console.log(category);
     return <CategoryListItem category={category} />;
   }
 
   render() {
-    console.log(this.props);
     return (
       <View>
       <ListView

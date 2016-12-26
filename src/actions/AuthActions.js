@@ -22,25 +22,24 @@ export const passwordChanged = (text) => {
   };
 };
 
-export const loginUser = ({ email, password }) => {
+export const loginUser = (email, password) => {
   return (dispatch) => {
-
     dispatch({ type: LOGIN_USER });
 
     firebase.auth().signInWithEmailAndPassword(email, password)
-      .then(user => loginUserSuccess(dispatch, user))
+      .then(user => loginUserSuccess(dispatch, { user, email, password } ))
       .catch(() => {
         firebase.auth().createUserWithEmailAndPassword(email, password)
-          .then(user => loginUserSuccess(dispatch, user))
+          .then(user => loginUserSuccess(dispatch, { user, email, password } ))
           .catch(() => loginUserFail(dispatch));
       });
   };
 };
 
-const loginUserSuccess = (dispatch, user) => {
+const loginUserSuccess = (dispatch, authObj) => {
   dispatch({
     type: LOGIN_USER_SUCCESS,
-    payload: user
+    payload: authObj
   });
   Actions.main();
 };

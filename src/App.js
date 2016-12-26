@@ -1,15 +1,37 @@
 import React, { Component } from 'react';
-import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
-import reducers from './reducers';
-import ReduxThunk from 'redux-thunk';
+import { AsyncStorage } from 'react-native';
+import { Provider, connect } from 'react-redux';
+import { persistStore } from 'redux-persist';
+import configureStore from './store/configureStore';
 import firebase from 'firebase';
 import Config from 'react-native-config';
 import Router from './Router';
 
+const RouterWithRedux = connect()(Router);
+const store = configureStore(this.state);
+
 class App extends Component {
 
-  componentWillMount() {
+  constructor() {
+    super();
+    this.state = {
+      rehydrated: false,
+      store
+    };
+  }
+
+  componentDidMount() {
+
+    const persistor = persistStore(
+      store,
+      {
+        storage: AsyncStorage,
+        whitelist: ['auth', 'goals', 'categories']
+      },
+      () => { this.setState({ rehydrated: true }); }
+    );
+
+
     const firebase_config = {
     apiKey: Config.FIREBASE_API_KEY,
     authDomain: `${Config.FIREBASE_PROJECT_NAME}.firebaseapp.com`,
@@ -22,11 +44,12 @@ class App extends Component {
   }
 
   render() {
-    const store = createStore(reducers, {}, applyMiddleware(ReduxThunk))
+    if (!this.state.rehydrated)
+          return null;
 
     return (
       <Provider store={store}>
-        <Router />
+        <RouterWithRedux />
       </Provider>
     );
   }

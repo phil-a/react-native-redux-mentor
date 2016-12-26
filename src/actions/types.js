@@ -15,3 +15,5 @@ export const CATEGORY_CREATE = 'category_create';
 export const CATEGORIES_FETCH_SUCCESS = 'categories_fetch_success';
 export const CATEGORY_SAVE_SUCCESS = 'category_save_success';
 export const CATEGORY_NOT_SAVED = 'category_not_saved';
+
+export const REHYDRATE = 'persist/REHYDRATE';
