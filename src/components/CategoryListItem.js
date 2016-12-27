@@ -3,10 +3,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Text, TouchableWithoutFeedback, TouchableOpacity, View, StyleSheet, Image} from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import { goalsFetch } from '../actions';
+import { goalsFetch, goalComplete } from '../actions';
 import { Card, CardSection, Button } from './common';
 import Grid from 'react-native-grid-component';
 import FlipCard from 'react-native-flip-card'
+import moment from 'moment';
 
 class CategoryListItem extends Component {
 
@@ -27,6 +28,11 @@ class CategoryListItem extends Component {
 
   onGoalPress(goal) {
     Actions.goalEdit({ goal: goal });
+  }
+
+  onCompletePress(goal) {
+    let now = moment().format();
+    this.props.goalComplete({ completed_datetime: now, uid: goal.uid });
   }
 
   _renderItem = (data: any, i: number) => {
@@ -70,16 +76,29 @@ class CategoryListItem extends Component {
     return (
       <View style={styles.back}>
         <View style={styles.backSection}>
-          <TouchableOpacity  style={styles.goalCornerButton} onPress={() => console.log("View pressed")}><Text style={styles.goalView}>View</Text></TouchableOpacity>
-          <TouchableOpacity  style={styles.goalCornerButton} onPress={() => this.onGoalPress(data)}><Text style={styles.goalEdit}>Edit</Text></TouchableOpacity>
+          <TouchableOpacity
+            style={styles.goalCornerButton}
+            onPress={() => console.log("View pressed")}
+          >
+            <Text style={styles.goalView}>View</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.goalCornerButton}
+            onPress={() => this.onGoalPress(data)}
+          >
+            <Text style={styles.goalEdit}>Edit</Text>
+          </TouchableOpacity>
         </View>
         <View style={styles.backSection}>
-          <TouchableOpacity  style={styles.goalCompleteButton} onPress={() => console.log("Complete pressed")}><Text style={styles.goalComplete}>Complete</Text></TouchableOpacity>
+          <TouchableOpacity
+            style={styles.goalCompleteButton}
+            onPress={() => this.onCompletePress(data)}
+          >
+              <Text style={styles.goalComplete}>Complete</Text>
+          </TouchableOpacity>
         </View>
-
         <View style={styles.backSection}>
         </View>
-
       </View>
     );
   }
@@ -217,4 +236,4 @@ const mapStateToProps = state => {
   return { goals, categories };
 }
 
-export default connect(mapStateToProps, { goalsFetch })(CategoryListItem);
+export default connect(mapStateToProps, { goalsFetch, goalComplete })(CategoryListItem);
