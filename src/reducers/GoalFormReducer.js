@@ -1,25 +1,27 @@
 import {
-  PUPIL_UPDATE,
-  PUPIL_CREATE,
-  PUPIL_SAVE_SUCCESS,
-  PUPIL_NOT_SAVED
+  GOAL_UPDATE,
+  GOAL_CREATE,
+  GOAL_SAVE_SUCCESS,
+  GOAL_NOT_SAVED
 } from '../actions/types';
 
 const INITIAL_STATE = {
   name: '',
-  phone: '',
-  shift: ''
+  desc: '',
+  category: '',
+  quantity: '',
+  frequency: ''
 };
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case PUPIL_UPDATE:
+    case GOAL_UPDATE:
       return { ...state, [action.payload.prop]: action.payload.value };
-    case PUPIL_CREATE:
+    case GOAL_CREATE:
       return { INITIAL_STATE };
-    case PUPIL_SAVE_SUCCESS:
+    case GOAL_SAVE_SUCCESS:
         return { INITIAL_STATE };
-    case PUPIL_NOT_SAVED:
+    case GOAL_NOT_SAVED:
       return { INITIAL_STATE };
     default:
       return state;

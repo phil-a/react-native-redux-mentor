@@ -1,2 +1,3 @@
 export * from './AuthActions';
-export * from './PupilActions';
+export * from './GoalActions';
+export * from './CategoryActions';

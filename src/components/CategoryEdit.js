@@ -1,37 +1,32 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import PupilForm from './PupilForm';
-import { pupilUpdate, pupilSave, pupilNotSaved, pupilDelete } from '../actions';
+import CategoryForm from './CategoryForm';
+import { categoryUpdate, categorySave, categoryNotSaved, categoryDelete } from '../actions';
 import { Card, CardSection, Button, Confirm } from './common';
 import Communications from 'react-native-communications';
 
-class PupilEdit extends Component {
+class CategoryEdit extends Component {
   state = {showModal: false};
   componentWillMount() {
-    _.each(this.props.pupil, (value, prop) => {
-      this.props.pupilUpdate({ prop, value });
+    _.each(this.props.category, (value, prop) => {
+      this.props.categoryUpdate({ prop, value });
     });
   }
 
   componentWillUnmount() {
-    const { name, phone, shift } = this.props;
-    this.props.pupilNotSaved({ name, phone, shift });
+    const { name, color } = this.props;
+    this.props.categoryNotSaved({ name });
   }
 
   onButtonPress() {
-    const { name, phone, shift } = this.props;
-    this.props.pupilSave({ name, phone, shift, uid: this.props.pupil.uid });
-  }
-
-  onTextPress() {
-    const { phone, shift } = this.props;
-    Communications.text(phone, `Your upcoming shift is on ${shift}`);
+    const { name, color } = this.props;
+    this.props.categorySave({ name, color, uid: this.props.category.uid });
   }
 
   onAccept() {
-    const { uid } = this.props.pupil;
-    this.props.pupilDelete({ uid });
+    const { uid } = this.props.category;
+    this.props.categoryDelete({ uid });
   }
 
   onDecline() {
@@ -41,7 +36,7 @@ class PupilEdit extends Component {
   render() {
     return (
       <Card>
-        <PupilForm />
+        <CategoryForm />
 
         <CardSection>
           <Button onPress={this.onButtonPress.bind(this)}>
@@ -50,13 +45,8 @@ class PupilEdit extends Component {
         </CardSection>
 
         <CardSection>
-          <Button onPress={this.onTextPress.bind(this)}>
-            Text Session
-          </Button>
-        </CardSection>
-        <CardSection>
           <Button onPress={() => this.setState({ showModal: !this.state.showModal })}>
-            Remove Pupil
+            Remove Category
           </Button>
         </CardSection>
         <Confirm
@@ -72,9 +62,9 @@ class PupilEdit extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { name, phone, shift } = state.pupilForm;
+  const { name, color } = state.categoryForm;
 
-  return { name, phone, shift };
+  return { name, color };
 };
 
-export default connect(mapStateToProps, { pupilUpdate, pupilSave, pupilNotSaved, pupilDelete })(PupilEdit)
+export default connect(mapStateToProps, { categoryUpdate, categorySave, categoryNotSaved, categoryDelete })(CategoryEdit)

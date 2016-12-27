@@ -1,10 +1,14 @@
 import { combineReducers } from 'redux';
 import AuthReducer from './AuthReducer';
-import PupilFormReducer from './PupilFormReducer';
-import PupilReducer from './PupilReducer';
+import GoalFormReducer from './GoalFormReducer';
+import GoalReducer from './GoalReducer';
+import CategoryFormReducer from './CategoryFormReducer';
+import CategoryReducer from './CategoryReducer';
 
 export default combineReducers({
   auth: AuthReducer,
-  pupilForm: PupilFormReducer,
-  pupils: PupilReducer
+  goalForm: GoalFormReducer,
+  goals: GoalReducer,
+  categoryForm: CategoryFormReducer,
+  categories: CategoryReducer
 });
