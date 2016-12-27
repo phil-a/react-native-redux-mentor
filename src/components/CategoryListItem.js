@@ -104,7 +104,7 @@ class CategoryListItem extends Component {
         <Grid
           style={styles.list}
           renderItem={this._renderItem}
-          data={this.props.goals.filter((goal) => goal.category == this.props.category.name)}
+          data={this.props.goals.filter((goal) => goal.category === this.props.category.name)}
           itemsPerRow={2}
           itemHasChanged={(d1, d2) => d1 !== d2}
         />
@@ -118,7 +118,7 @@ const styles = {
     fontSize: 18,
     fontWeight: '600',
     color: 'white',
-    paddingLeft: 15
+    paddingLeft: 15,
   },
   categoryRowStyle: {
     flex: 1,

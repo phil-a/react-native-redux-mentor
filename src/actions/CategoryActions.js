@@ -45,33 +45,29 @@ export const categorySave = ({ name, color, uid }) => {
     // get old name
     firebase.database().ref(`/users/${currentUser.uid}/categories/${uid}/name`)
       .once('value')
-      .then(function(snapshot) {
-        var oldCategoryName = snapshot.val();
-
-        console.log(oldCategoryName);
+      .then((snapshot) => {
+        let oldCategoryName = snapshot.val();
 
         //Get list of goal keys to update
-        var goalsRef = firebase.database().ref(`/users/${currentUser.uid}/goals/`).orderByChild("category").equalTo(oldCategoryName).once('value')
-        .then(function(goalSnapshot) {
+        let goalsRef = firebase.database().ref(`/users/${currentUser.uid}/goals/`)
+        .orderByChild("category")
+        .equalTo(oldCategoryName)
+        .once('value')
+        .then((goalSnapshot) => {
           if (goalSnapshot.val()) {
             const goalKeysToUpdate = Object.keys(goalSnapshot.val())
             //Update goals with new category name
-            goalKeysToUpdate.map(function(goalKey){
-
-              //get existing values
+            goalKeysToUpdate.map((goalKey) => {
               firebase.database().ref(`/users/${currentUser.uid}/goals/${goalKey}`)
                 .once('value', snapshot => {
-                  var updatedGoal = snapshot.val()
+                  let updatedGoal = snapshot.val()
                   updatedGoal["category"] = name;
                   firebase.database().ref(`/users/${currentUser.uid}/goals/${goalKey}`).set(updatedGoal);
                 });
             });
           }
         });
-
-
       });
-
 
     //Update category
     firebase.database().ref(`/users/${currentUser.uid}/categories/${uid}`)

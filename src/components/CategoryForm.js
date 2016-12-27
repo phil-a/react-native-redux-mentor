@@ -30,16 +30,14 @@ class CategoryForm extends Component {
           />
         </CardSection>
         <CardSection>
-          <View style={{flex: 1}}>
-              <Modal
-              style={{flex: 1}}
+          <View style={styles.colorPickerContainer}>
+            <Modal
                 animationType={"slide"}
                 transparent={false}
                 visible={this.state.modalVisible}
                 onRequestClose={() => {alert("Modal has been closed.")}}
                 >
                <View style={{flex: 1}}>
-                <View style={{flex: 1}}>
                 <ColorPicker
                   oldColor={this.props.color}
                   onColorSelected={value => this.setColorInForm(value)}
@@ -52,12 +50,13 @@ class CategoryForm extends Component {
                     <Text>Hide Modal</Text>
                   </TouchableOpacity>
                 </View>
-               </View>
               </Modal>
 
-              <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+              <View style={styles.colorPicker}>
                 <Text style={styles.pickerLabel}>Color</Text>
-                <TouchableOpacity onPress={() => {this.setModalVisible(true)}} style={{flex: 2, height: 40, width: 40, borderWidth: 1, borderRadius: 100, backgroundColor: this.props.color}}>
+                <TouchableOpacity
+                onPress={() => {this.setModalVisible(true)}}
+                style={[styles.colorSelect, {backgroundColor: this.props.color}]}>
                 </TouchableOpacity>
               </View>
 
@@ -69,9 +68,19 @@ class CategoryForm extends Component {
 }
 
 const styles = {
-  picker: {
-    width: 200,
-    marginLeft: 10
+  colorPickerContainer: {
+    flex: 1,
+  },
+  colorPicker: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  colorSelect: {
+    flex: 2,
+    height: 40,
+    width: 40,
+    borderWidth: 1,
+    borderRadius: 100,
   },
   pickerLabel: {
     flex: 1,
