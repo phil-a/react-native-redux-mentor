@@ -15,13 +15,13 @@ class CategoryEdit extends Component {
   }
 
   componentWillUnmount() {
-    const { name } = this.props;
+    const { name, color } = this.props;
     this.props.categoryNotSaved({ name });
   }
 
   onButtonPress() {
-    const { name, desc, category, quantity, frequency } = this.props;
-    this.props.categorySave({ name, uid: this.props.category.uid });
+    const { name, color } = this.props;
+    this.props.categorySave({ name, color, uid: this.props.category.uid });
   }
 
   onAccept() {
@@ -62,9 +62,9 @@ class CategoryEdit extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { name } = state.categoryForm;
+  const { name, color } = state.categoryForm;
 
-  return { name };
+  return { name, color };
 };
 
 export default connect(mapStateToProps, { categoryUpdate, categorySave, categoryNotSaved, categoryDelete })(CategoryEdit)

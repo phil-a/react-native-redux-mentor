@@ -15,12 +15,12 @@ export const categoryUpdate = ({ prop, value }) => {
   };
 };
 
-export const categoryCreate = ({ name }) => {
+export const categoryCreate = ({ name, color }) => {
   const { currentUser } = firebase.auth();
 
   return (dispatch) => {
     firebase.database().ref(`/users/${currentUser.uid}/categories`)
-      .push({ name })
+      .push({ name, color })
       .then(() => {
         dispatch({ type: CATEGORY_CREATE });
         Actions.pop();
@@ -39,12 +39,39 @@ export const categoriesFetch = () => {
   };
 };
 
-export const categorySave = ({ name, uid }) => {
+export const categorySave = ({ name, color, uid }) => {
   const { currentUser } = firebase.auth();
-
   return (dispatch) => {
+    // get old name
+    firebase.database().ref(`/users/${currentUser.uid}/categories/${uid}/name`)
+      .once('value')
+      .then((snapshot) => {
+        let oldCategoryName = snapshot.val();
+
+        //Get list of goal keys to update
+        let goalsRef = firebase.database().ref(`/users/${currentUser.uid}/goals/`)
+        .orderByChild("category")
+        .equalTo(oldCategoryName)
+        .once('value')
+        .then((goalSnapshot) => {
+          if (goalSnapshot.val()) {
+            const goalKeysToUpdate = Object.keys(goalSnapshot.val())
+            //Update goals with new category name
+            goalKeysToUpdate.map((goalKey) => {
+              firebase.database().ref(`/users/${currentUser.uid}/goals/${goalKey}`)
+                .once('value', snapshot => {
+                  let updatedGoal = snapshot.val()
+                  updatedGoal["category"] = name;
+                  firebase.database().ref(`/users/${currentUser.uid}/goals/${goalKey}`).set(updatedGoal);
+                });
+            });
+          }
+        });
+      });
+
+    //Update category
     firebase.database().ref(`/users/${currentUser.uid}/categories/${uid}`)
-      .set({ name })
+      .set({ name, color })
       .then(() => {
         dispatch({ type: CATEGORY_SAVE_SUCCESS });
         Actions.pop();
