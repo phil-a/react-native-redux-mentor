@@ -42,6 +42,38 @@ export const categoriesFetch = () => {
 export const categorySave = ({ name, color, uid }) => {
   const { currentUser } = firebase.auth();
   return (dispatch) => {
+    // get old name
+    firebase.database().ref(`/users/${currentUser.uid}/categories/${uid}/name`)
+      .once('value')
+      .then(function(snapshot) {
+        var oldCategoryName = snapshot.val();
+
+        console.log(oldCategoryName);
+
+        //Get list of goal keys to update
+        var goalsRef = firebase.database().ref(`/users/${currentUser.uid}/goals/`).orderByChild("category").equalTo(oldCategoryName).once('value')
+        .then(function(goalSnapshot) {
+          if (goalSnapshot.val()) {
+            const goalKeysToUpdate = Object.keys(goalSnapshot.val())
+            //Update goals with new category name
+            goalKeysToUpdate.map(function(goalKey){
+
+              //get existing values
+              firebase.database().ref(`/users/${currentUser.uid}/goals/${goalKey}`)
+                .once('value', snapshot => {
+                  var updatedGoal = snapshot.val()
+                  updatedGoal["category"] = name;
+                  firebase.database().ref(`/users/${currentUser.uid}/goals/${goalKey}`).set(updatedGoal);
+                });
+            });
+          }
+        });
+
+
+      });
+
+
+    //Update category
     firebase.database().ref(`/users/${currentUser.uid}/categories/${uid}`)
       .set({ name, color })
       .then(() => {

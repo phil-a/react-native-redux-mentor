@@ -90,7 +90,7 @@ class CategoryListItem extends Component {
       <TouchableWithoutFeedback onPress={this.onRowPress.bind(this)}>
         <View style={[styles.categoryRowStyle, this.colorStyle(color)]}>
           <Text style={styles.categoryTitle}>
-            { name } { color }
+            { name }
           </Text>
         </View>
       </TouchableWithoutFeedback>
