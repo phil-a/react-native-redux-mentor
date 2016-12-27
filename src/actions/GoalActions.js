@@ -15,12 +15,11 @@ export const goalUpdate = ({ prop, value }) => {
   };
 };
 
-export const goalCreate = ({ name, desc, category, quantity, frequency }) => {
+export const goalCreate = ({ name, desc, category, quantity, frequency, created_at, completed_dates }) => {
   const { currentUser } = firebase.auth();
-
   return (dispatch) => {
     firebase.database().ref(`/users/${currentUser.uid}/goals`)
-      .push({ name, desc, category, quantity, frequency })
+      .push({ name, desc, category, quantity, frequency, created_at, completed_dates })
       .then(() => {
         dispatch({ type: GOAL_CREATE });
         Actions.pop();
@@ -44,7 +43,7 @@ export const goalSave = ({ name, desc, category, quantity, frequency, uid }) => 
 
   return (dispatch) => {
     firebase.database().ref(`/users/${currentUser.uid}/goals/${uid}`)
-      .set({ name, desc, category, quantity, frequency })
+      .update({ name, desc, category, quantity, frequency })
       .then(() => {
         dispatch({ type: GOAL_SAVE_SUCCESS });
         Actions.pop();
@@ -69,6 +68,15 @@ export const goalDelete = ({ uid }) => {
       });
   };
 };
+
+export const goalComplete = ({ completed_datetime, uid }) => {
+  const { currentUser } = firebase.auth();
+  return (dispatch) => {
+    firebase.database().ref(`/users/${currentUser.uid}/goals/${uid}/dates_completed`)
+    .push({ completed_datetime })
+  }
+
+}
 
 export const goalCategoryCreate = () => {
   const { currentUser } = firebase.auth();

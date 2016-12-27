@@ -10,7 +10,9 @@ const INITIAL_STATE = {
   desc: '',
   category: '',
   quantity: '',
-  frequency: ''
+  frequency: '',
+  created_at: null,
+  completed_dates: null
 };
 
 export default (state = INITIAL_STATE, action) => {

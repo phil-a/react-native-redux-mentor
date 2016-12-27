@@ -60,9 +60,7 @@ export const categorySave = ({ name, color, uid }) => {
             goalKeysToUpdate.map((goalKey) => {
               firebase.database().ref(`/users/${currentUser.uid}/goals/${goalKey}`)
                 .once('value', snapshot => {
-                  let updatedGoal = snapshot.val()
-                  updatedGoal["category"] = name;
-                  firebase.database().ref(`/users/${currentUser.uid}/goals/${goalKey}`).set(updatedGoal);
+                  firebase.database().ref(`/users/${currentUser.uid}/goals/${goalKey}`).update({category: name});
                 });
             });
           }
