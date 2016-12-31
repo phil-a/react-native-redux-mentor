@@ -18,6 +18,7 @@
     "react-native-config": "^0.1.2",
     "react-native-flip-card": "^3.3.1",
     "react-native-grid-component": "^1.0.3",
+    "react-native-linear-gradient": "^1.6.2",
     "react-native-modal-picker": "^0.0.16",
     "react-native-router-flux": "3.35.0",
     "react-redux": "^4.4.6",
