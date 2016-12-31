@@ -8,6 +8,7 @@ import { Card, CardSection, Button } from './common';
 import Grid from 'react-native-grid-component';
 import FlipCard from 'react-native-flip-card'
 import moment from 'moment';
+import LinearGradient from 'react-native-linear-gradient';
 
 class CategoryListItem extends Component {
 
@@ -84,24 +85,28 @@ class CategoryListItem extends Component {
             style={styles.goalCornerButton}
             onPress={() => this.onGoalViewPress(data)}
           >
+          <LinearGradient colors={['rgba(0,0,0,0.5)', 'transparent']} style={styles.linearGradient}>
             <Text style={styles.goalView}>View</Text>
+            </LinearGradient>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.goalCornerButton}
             onPress={() => this.onGoalPress(data)}
           >
+          <LinearGradient colors={['rgba(0,0,0,0.5)', 'transparent']} style={styles.linearGradient}>
             <Text style={styles.goalEdit}>Edit</Text>
+          </LinearGradient>
           </TouchableOpacity>
         </View>
-        <View style={styles.backSection}>
+        <View style={styles.completeSection}>
           <TouchableOpacity
             style={styles.goalCompleteButton}
             onPress={() => this.onCompletePress(data)}
           >
+            <LinearGradient colors={['transparent', 'rgba(0,0,0,0.5)']} style={styles.linearGradient}>
               <Text style={styles.goalComplete}>Complete</Text>
+            </LinearGradient>
           </TouchableOpacity>
-        </View>
-        <View style={styles.backSection}>
         </View>
       </View>
     );
@@ -200,13 +205,17 @@ const styles = {
     padding: 5,
     backgroundColor: 'rgba(0,0,0,0)',
   },
+  completeSection: {
+    flex: 0.25,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
   goalComplete: {
     flex: 1,
     textAlign: 'center',
     fontSize: 18,
     color: 'rgba(255,255,255,0.6)',
-    padding: 5,
-    backgroundColor: 'rgba(0,0,0,0.15)',
+    padding: 5
   },
   goalTime: {
     textAlign: 'center',
@@ -225,7 +234,12 @@ const styles = {
   goalImage: {
     width: null,
     height: 150,
-  }
+  },
+  linearGradient: {
+    flex: 1,
+    paddingLeft: 0,
+    paddingRight: 0,
+  },
 }
 
 const mapStateToProps = state => {
