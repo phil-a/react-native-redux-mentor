@@ -30,6 +30,10 @@ class CategoryListItem extends Component {
     Actions.goalEdit({ goal: goal });
   }
 
+  onGoalViewPress(goal) {
+    Actions.goalView({ goal: goal });
+  }
+
   onCompletePress(goal) {
     let now = moment().format();
     this.props.goalComplete({ completed_datetime: now, uid: goal.uid });
@@ -78,7 +82,7 @@ class CategoryListItem extends Component {
         <View style={styles.backSection}>
           <TouchableOpacity
             style={styles.goalCornerButton}
-            onPress={() => console.log("View pressed")}
+            onPress={() => this.onGoalViewPress(data)}
           >
             <Text style={styles.goalView}>View</Text>
           </TouchableOpacity>
