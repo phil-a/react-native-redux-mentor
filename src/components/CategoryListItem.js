@@ -44,9 +44,9 @@ class CategoryListItem extends Component {
       <FlipCard
         key={i}
         style={[styles.item, this.colorStyle(this.props.category.color)]}
-        friction={25}
-        perspective={200}
-        flipHorizontal={true}
+        friction={3}
+        perspective={900}
+        flipHorizontal={false}
         flipVertical={true}
         flip={false}
         clickable={true}
