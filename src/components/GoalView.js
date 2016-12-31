@@ -1,6 +1,8 @@
 import _ from 'lodash';
+import moment from 'moment';
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
+import Calendar from 'react-native-calendar';
 
 class GoalView extends Component {
 
@@ -8,10 +10,12 @@ class GoalView extends Component {
     var completed_array = [];
     const completed_objects = _.values(dates_completed);
     _.forEach(completed_objects, function(value) {
-      completed_array.push(value["completed_datetime"]);
+      completed_array.push(moment(value["completed_datetime"]).format("YYYY-MM-DD"));
     });
     return completed_array;
   }
+
+
 
   render() {
     const { name, desc, quantity, frequency, category, created_at, dates_completed } = this.props.goal;
@@ -25,9 +29,35 @@ class GoalView extends Component {
         <Text>Category: {category}</Text>
         <Text>Created at: {created_at}</Text>
         <Text>Completed: {completed_array}</Text>
+        <Calendar
+          showControls
+          hasEventCircle
+          showEventIndicators
+          eventDates={completed_array}
+          customStyle={customStyle}
+        />
       </View>
     );
   }
+}
+
+const customStyle = {
+  currentDayText: {
+    color: 'black',
+    fontWeight: 'bold',
+  },
+  hasEventCircle: {
+    backgroundColor: 'lightskyblue',
+  },
+  selectedDayCircle: {
+    backgroundColor: 'black',
+  },
+  weekendDayText: {
+    color: 'lightsteelblue',
+  },
+  day: {
+    color: 'steelblue',
+  },
 }
 
 export default GoalView;
