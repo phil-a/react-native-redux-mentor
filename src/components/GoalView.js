@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import moment from 'moment';
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { ScrollView, Text } from 'react-native';
 import Calendar from 'react-native-calendar';
 
 class GoalView extends Component {
@@ -21,7 +21,7 @@ class GoalView extends Component {
     const { name, desc, quantity, frequency, category, created_at, dates_completed } = this.props.goal;
     const completed_array = this.extractDates(dates_completed);
     return (
-      <View>
+      <ScrollView>
         <Text>Name: {name}</Text>
         <Text>Description: {desc}</Text>
         <Text>Quantity: {quantity}</Text>
@@ -36,7 +36,7 @@ class GoalView extends Component {
           eventDates={completed_array}
           customStyle={customStyle}
         />
-      </View>
+      </ScrollView>
     );
   }
 }
