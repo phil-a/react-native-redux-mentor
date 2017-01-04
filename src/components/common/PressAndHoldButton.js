@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import {
+  Dimensions,
   StyleSheet,
   Animated,
   View,
@@ -9,15 +10,15 @@ import {
 } from 'react-native';
 
 var ACTION_TIMER = 2000;
-var COLORS = ['rgb(255,255,255)', 'rgb(111,235,62)'];
-
+var COLORS = ['rgba(0,0,0,0)', 'rgba(0,255,0,0.25)', 'rgba(0,0,255,1)'];
+var {height, width} = Dimensions.get('window');
 class PressAndHoldButton extends Component {
 
 
   state = { pressAction: new Animated.Value(0),
-            textComplete: '',
-            buttonWidth: 130,
-            buttonHeight: 36 }
+            textComplete: 'Hold to complete',
+            buttonWidth: width/2 - 26,
+            buttonHeight: 30 }
 
   componentWillMount(){
     this._value = 0;
@@ -36,9 +37,11 @@ class PressAndHoldButton extends Component {
     }).start();
   }
   animationActionComplete() {
-    var message = '';
+    const { onCompletePress, goal, action } = this.props;
+    var message = 'Hold to complete';
     if (this._value === 1) {
-        message = 'You held it long enough to fire the action!';
+        message = 'Goal completed!';
+        onCompletePress(goal, action)
     }
     this.setState({
         textComplete: message
@@ -56,7 +59,7 @@ class PressAndHoldButton extends Component {
         outputRange: [0, this.state.buttonWidth]
     });
     var bgColor = this.state.pressAction.interpolate({
-        inputRange: [0, 1],
+        inputRange: [0, 0.25, 1],
         outputRange: COLORS
     })
     return {
@@ -72,38 +75,37 @@ class PressAndHoldButton extends Component {
                 onPressIn={this.handlePressIn.bind(this)}
                 onPressOut={this.handlePressOut.bind(this)}
             >
-                <View style={styles.button} onLayout={this.getButtonWidthLayout.bind(this)}>
-                    <Animated.View style={[styles.bgFill, this.getProgressStyles()]} />
-                    <Text style={styles.text}>Hold to complete</Text>
+                <View style={[styles.button]}>
+                  <Animated.View style={[styles.bgFill, this.getProgressStyles()]} />
+                  <Text style={styles.text}>{this.state.textComplete}</Text>
                 </View>
             </TouchableWithoutFeedback>
-            <View>
-                <Text>{this.state.textComplete}</Text>
-            </View>
        </View>
     );
   }
 }
 var styles = StyleSheet.create({
   container: {
+    borderWidth: 1,
     flex: 1,
     flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   button: {
-    padding: 10,
-    borderWidth: 3,
-    borderColor: 'rgba(255,255,255,0.5)'
+    padding: 0,
+    borderColor: 'rgba(255,255,255,0.5)',
+    justifyContent: 'center',
   },
   text: {
+    alignSelf: 'center',
     backgroundColor: 'transparent',
     color: 'rgba(255,255,255,0.5)'
   },
   bgFill: {
     position: 'absolute',
-    top: 0,
-    left: 0
+    top: -6,
+    left: 0,
+    height: 44
   }
 });
 

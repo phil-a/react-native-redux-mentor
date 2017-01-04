@@ -3,23 +3,12 @@ import moment from 'moment';
 import React, { Component } from 'react';
 import { ScrollView, Text } from 'react-native';
 import Calendar from 'react-native-calendar';
-
+import { extractDates } from '../helpers';
 class GoalView extends Component {
-
-  extractDates(dates_completed) {
-    var completed_array = [];
-    const completed_objects = _.values(dates_completed);
-    _.forEach(completed_objects, function(value) {
-      completed_array.push(moment(value["completed_datetime"]).format("YYYY-MM-DD"));
-    });
-    return completed_array;
-  }
-
-
 
   render() {
     const { name, desc, quantity, frequency, category, created_at, dates_completed } = this.props.goal;
-    const completed_array = this.extractDates(dates_completed);
+    const completed_array = extractDates(dates_completed);
     return (
       <ScrollView>
         <Text>Name: {name}</Text>

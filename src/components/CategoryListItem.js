@@ -4,11 +4,12 @@ import { connect } from 'react-redux';
 import { Text, TouchableWithoutFeedback, TouchableOpacity, View, StyleSheet, Image} from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { goalsFetch, goalComplete } from '../actions';
-import { Card, CardSection, Button } from './common';
+import { Card, CardSection, Button, PressAndHoldButton } from './common';
 import Grid from 'react-native-grid-component';
 import FlipCard from 'react-native-flip-card'
-import moment from 'moment';
 import LinearGradient from 'react-native-linear-gradient';
+import moment from 'moment';
+import { extractDates } from '../helpers';
 
 class CategoryListItem extends Component {
 
@@ -19,8 +20,13 @@ class CategoryListItem extends Component {
   colorStyle = function(color) {
     return {
       backgroundColor: color,
-      borderColor: color
     }
+  }
+
+  completedTodayStyle = function(dates_completed, color) {
+    const dates_array = extractDates(dates_completed);
+    const today = moment().format("YYYY-MM-DD");
+    return (dates_array[dates_array.length-1] == today) ? { borderColor: color } : { borderColor: 'lightgrey' }
   }
 
   onRowPress() {
@@ -35,16 +41,16 @@ class CategoryListItem extends Component {
     Actions.goalView({ goal: goal });
   }
 
-  onCompletePress(goal) {
+  onCompletePress(goal, action) {
     let now = moment().format();
-    this.props.goalComplete({ completed_datetime: now, uid: goal.uid });
+    action({ completed_datetime: now, uid: goal.uid });
   }
 
   _renderItem = (data: any, i: number) => {
     return (
       <FlipCard
         key={i}
-        style={[styles.item, this.colorStyle(this.props.category.color)]}
+        style={[styles.item, this.completedTodayStyle(data.dates_completed, this.props.category.color)]}
         friction={3}
         perspective={900}
         flipHorizontal={false}
@@ -99,14 +105,7 @@ class CategoryListItem extends Component {
           </TouchableOpacity>
         </View>
         <View style={styles.completeSection}>
-          <TouchableOpacity
-            style={styles.goalCompleteButton}
-            onPress={() => this.onCompletePress(data)}
-          >
-            <LinearGradient colors={['transparent', 'rgba(0,0,0,0.5)']} style={styles.linearGradient}>
-              <Text style={styles.goalComplete}>Complete</Text>
-            </LinearGradient>
-          </TouchableOpacity>
+          <PressAndHoldButton onCompletePress={this.onCompletePress} goal={data} action={this.props.goalComplete}/>
         </View>
       </View>
     );
