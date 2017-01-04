@@ -11,7 +11,7 @@ class GoalCreate extends Component {
   onButtonPress(){
     let created_at = moment().format();
     const { name, desc, category, quantity, frequency } = this.props;
-    this.props.goalCreate({ name, desc, category: category || 'Default', quantity, frequency, created_at, completed_dates })
+    this.props.goalCreate({ name, desc, category: category || 'Default', quantity, frequency, created_at })
   }
 
   render() {

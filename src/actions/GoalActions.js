@@ -15,11 +15,11 @@ export const goalUpdate = ({ prop, value }) => {
   };
 };
 
-export const goalCreate = ({ name, desc, category, quantity, frequency, created_at, completed_dates }) => {
+export const goalCreate = ({ name, desc, category, quantity, frequency, created_at }) => {
   const { currentUser } = firebase.auth();
   return (dispatch) => {
     firebase.database().ref(`/users/${currentUser.uid}/goals`)
-      .push({ name, desc, category, quantity, frequency, created_at, completed_dates })
+      .push({ name, desc, category, quantity, frequency, created_at })
       .then(() => {
         dispatch({ type: GOAL_CREATE });
         Actions.pop();
