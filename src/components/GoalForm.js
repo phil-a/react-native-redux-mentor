@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { ScrollView, View, Text, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { goalUpdate, categoryCreate, goalCategoryCreate, categoriesFetch } from '../actions';
 import { CardSection, Input, Button } from './common';
@@ -37,7 +37,7 @@ class GoalForm extends Component {
     var category_data = [];
     this.props.categories.map((category) => this.mapCategoryData(category, category_data));
     return (
-      <View>
+      <ScrollView>
         <CardSection>
           <Input
             label="Name"
@@ -94,7 +94,16 @@ class GoalForm extends Component {
             onChangeText={value => this.props.goalUpdate({ prop: 'frequency', value })}
           />
         </CardSection>
-      </View>
+
+        <CardSection>
+          <Input
+            label="Image URL"
+            placeholder="Link to image"
+            value={this.props.imageUrl}
+            onChangeText={value => this.props.goalUpdate({ prop: 'imageUrl', value })}
+          />
+        </CardSection>
+      </ScrollView>
     );
   }
 }
@@ -133,11 +142,11 @@ const styles = {
 };
 
 const mapStateToProps = (state) => {
-  const {name, desc, category, quantity, frequency} = state.goalForm;
+  const {name, desc, category, quantity, frequency, imageUrl} = state.goalForm;
   const categories = _.map(state.categories, (val, uid) => {
     return { ...val, uid };
   });
-  return { name, desc, category, quantity, frequency, categories }
+  return { name, desc, category, quantity, frequency, imageUrl, categories }
 };
 
 export default connect(mapStateToProps, { goalUpdate, categoryCreate, goalCategoryCreate, categoriesFetch })(GoalForm);

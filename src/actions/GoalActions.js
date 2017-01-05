@@ -15,11 +15,11 @@ export const goalUpdate = ({ prop, value }) => {
   };
 };
 
-export const goalCreate = ({ name, desc, category, quantity, frequency, created_at }) => {
+export const goalCreate = ({ name, desc, category, quantity, frequency, imageUrl, created_at }) => {
   const { currentUser } = firebase.auth();
   return (dispatch) => {
     firebase.database().ref(`/users/${currentUser.uid}/goals`)
-      .push({ name, desc, category, quantity, frequency, created_at })
+      .push({ name, desc, category, quantity, frequency, imageUrl, created_at })
       .then(() => {
         dispatch({ type: GOAL_CREATE });
         Actions.pop();
@@ -38,12 +38,12 @@ export const goalsFetch = () => {
   };
 };
 
-export const goalSave = ({ name, desc, category, quantity, frequency, uid }) => {
+export const goalSave = ({ name, desc, category, quantity, frequency, imageUrl, uid }) => {
   const { currentUser } = firebase.auth();
 
   return (dispatch) => {
     firebase.database().ref(`/users/${currentUser.uid}/goals/${uid}`)
-      .update({ name, desc, category, quantity, frequency })
+      .update({ name, desc, category, quantity, frequency, imageUrl })
       .then(() => {
         dispatch({ type: GOAL_SAVE_SUCCESS });
         Actions.pop();
@@ -51,7 +51,7 @@ export const goalSave = ({ name, desc, category, quantity, frequency, uid }) => 
   }
 };
 
-export const goalNotSaved = ({ name, desc, category, quantity, frequency }) => {
+export const goalNotSaved = ({ name, desc, category, quantity, frequency, imageUrl }) => {
   return (dispatch) => {
     dispatch({ type: GOAL_NOT_SAVED });
   };

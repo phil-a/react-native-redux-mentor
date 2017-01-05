@@ -51,7 +51,7 @@ class CategoryListItem extends Component {
       <FlipCard
         key={i}
         style={[styles.item, this.completedTodayStyle(data.dates_completed, this.props.category.color)]}
-        friction={3}
+        friction={4}
         perspective={900}
         flipHorizontal={false}
         flipVertical={true}
@@ -70,14 +70,15 @@ class CategoryListItem extends Component {
       <Image
       style={styles.goalImage}
       resizeMode='cover'
-      source={{uri: 'https://lh3.googleusercontent.com/6Wy8-iSfaJhcbzym-vMOd6l2393bDmaJKOBUqYtO6pjvi3ZfHVGe41IWmVOF6nnZr64DWCzkLQ=s640-h400-e365'}}
+      source={{uri: data.imageUrl}}
       >
         <View style={styles.face}>
-          <Text style={styles.goalName}>{data.name}</Text>
-          <View style={styles.goalSpace}>
-            <Text style={styles.goalTime}>{data.quantity} every {data.frequency} days</Text>
-          </View>
-          <Text style={styles.goalDesc}>{data.desc}</Text>
+          <LinearGradient colors={['rgba(255,255,255,0.0)', 'rgba(255,255,255,0.0)', 'rgba(255,255,255,0.8)']} style={styles.linearGradient}>
+            <View style={styles.goalSpace}>
+              <Text style={styles.goalName}>{data.name}</Text>
+              <Text style={styles.goalTime}>{data.quantity} every {data.frequency} days</Text>
+            </View>
+          </LinearGradient>
         </View>
       </Image>
     );
@@ -85,29 +86,37 @@ class CategoryListItem extends Component {
 
   _renderBack(data) {
     return (
-      <View style={styles.back}>
-        <View style={styles.backSection}>
-          <TouchableOpacity
-            style={styles.goalCornerButton}
-            onPress={() => this.onGoalViewPress(data)}
-          >
-          <LinearGradient colors={['rgba(0,0,0,0.5)', 'transparent']} style={styles.linearGradient}>
-            <Text style={styles.goalView}>View</Text>
+      <Image
+      style={styles.goalImage}
+      resizeMode='cover'
+      source={{uri: data.imageUrl}}
+      >
+        <View style={styles.back}>
+          <View style={styles.backSection}>
+            <TouchableOpacity
+              style={styles.goalCornerButton}
+              onPress={() => this.onGoalViewPress(data)}
+            >
+            <LinearGradient colors={['rgba(0,0,0,0.5)', 'transparent']} style={styles.linearGradient}>
+              <Text style={styles.goalView}>View</Text>
             </LinearGradient>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.goalCornerButton}
-            onPress={() => this.onGoalPress(data)}
-          >
-          <LinearGradient colors={['rgba(0,0,0,0.5)', 'transparent']} style={styles.linearGradient}>
-            <Text style={styles.goalEdit}>Edit</Text>
-          </LinearGradient>
-          </TouchableOpacity>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.goalCornerButton}
+              onPress={() => this.onGoalPress(data)}
+            >
+            <LinearGradient colors={['rgba(0,0,0,0.5)', 'transparent']} style={styles.linearGradient}>
+              <Text style={styles.goalEdit}>Edit</Text>
+            </LinearGradient>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.completeSection}>
+            <LinearGradient colors={['rgba(0,0,0,0.5)', 'rgba(0,0,0,0.2)', 'rgba(0,0,0,0.5)']} style={styles.linearGradient}>
+              <PressAndHoldButton onCompletePress={this.onCompletePress} goal={data} action={this.props.goalComplete}/>
+            </LinearGradient>
+          </View>
         </View>
-        <View style={styles.completeSection}>
-          <PressAndHoldButton onCompletePress={this.onCompletePress} goal={data} action={this.props.goalComplete}/>
-        </View>
-      </View>
+      </Image>
     );
   }
 
@@ -164,22 +173,18 @@ const styles = {
   face:{
     flex: 1,
     justifyContent: 'space-between',
-    backgroundColor: 'rgba(0,0,0,0.6)',
+    backgroundColor: 'rgba(0,0,0,0.0)',
   },
   back:{
     flex: 1,
     justifyContent: 'space-between',
-    backgroundColor: 'rgba(0,0,0,0.6)',
+    backgroundColor: 'rgba(35,35,35,0.5)',
   },
   backSection: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
-  },
-  goalName: {
-    fontSize: 20,
-    textAlign: 'center',
-    color: 'rgba(255,255,255,0.6)',
+    backgroundColor: 'rgba(35,35,35,0.2)',
   },
   goalCornerButton: {
     flex: 1,
@@ -192,7 +197,7 @@ const styles = {
     flex: 1,
     textAlign: 'left',
     fontSize: 18,
-    color: 'rgba(255,255,255,0.6)',
+    color: 'rgba(255,255,255,0.9)',
     padding: 5,
     backgroundColor: 'rgba(0,0,0,0)',
   },
@@ -200,35 +205,42 @@ const styles = {
     flex: 1,
     textAlign: 'right',
     fontSize: 18,
-    color: 'rgba(255,255,255,0.6)',
+    color: 'rgba(255,255,255,0.9)',
     padding: 5,
     backgroundColor: 'rgba(0,0,0,0)',
   },
   completeSection: {
-    flex: 0.25,
+    flex: 0.36,
     flexDirection: 'row',
     justifyContent: 'space-between',
+    backgroundColor: 'rgba(0,0,0,0.0)'
   },
   goalComplete: {
     flex: 1,
     textAlign: 'center',
     fontSize: 18,
-    color: 'rgba(255,255,255,0.6)',
+    color: 'rgba(0,0,0,0.9)',
     padding: 5
+  },
+  goalName: {
+    fontSize: 20,
+    textAlign: 'center',
+    color: 'rgba(0,0,0,0.8)',
   },
   goalTime: {
     textAlign: 'center',
-    color: 'rgba(255,255,255,0.6)',
+    color: 'rgba(0,0,0,0.8)',
   },
   goalSpace: {
     flex: 1,
+    justifyContent: 'flex-end',
     borderTopWidth: 1,
     borderBottomWidth: 1,
-    borderColor: 'rgba(255,255,255,0.25)',
+    borderColor: 'rgba(0,0,0,0.25)',
   },
   goalDesc: {
     textAlign: 'center',
-    color: 'rgba(255,255,255,0.6)',
+    color: 'rgba(0,0,0,0.9)',
   },
   goalImage: {
     width: null,

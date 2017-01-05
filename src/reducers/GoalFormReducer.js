@@ -11,6 +11,7 @@ const INITIAL_STATE = {
   category: '',
   quantity: '',
   frequency: '',
+  imageUrl: '',
   created_at: null,
   completed_dates: null
 };

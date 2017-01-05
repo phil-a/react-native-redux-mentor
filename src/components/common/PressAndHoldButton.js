@@ -18,7 +18,7 @@ class PressAndHoldButton extends Component {
   state = { pressAction: new Animated.Value(0),
             textComplete: 'Hold to complete',
             buttonWidth: width/2 - 26,
-            buttonHeight: 30 }
+            buttonHeight: 44 }
 
   componentWillMount(){
     this._value = 0;
@@ -71,39 +71,39 @@ class PressAndHoldButton extends Component {
   render() {
     return (
        <View style={styles.container}>
-            <TouchableWithoutFeedback
-                onPressIn={this.handlePressIn.bind(this)}
-                onPressOut={this.handlePressOut.bind(this)}
-            >
-                <View style={[styles.button]}>
-                  <Animated.View style={[styles.bgFill, this.getProgressStyles()]} />
-                  <Text style={styles.text}>{this.state.textComplete}</Text>
-                </View>
-            </TouchableWithoutFeedback>
+          <TouchableWithoutFeedback
+              onPressIn={this.handlePressIn.bind(this)}
+              onPressOut={this.handlePressOut.bind(this)}
+          >
+            <View style={[styles.button]}>
+              <Animated.View style={[styles.bgFill, this.getProgressStyles()]} />
+              <Text style={styles.text}>{this.state.textComplete}</Text>
+            </View>
+          </TouchableWithoutFeedback>
        </View>
     );
   }
 }
 var styles = StyleSheet.create({
   container: {
-    borderWidth: 1,
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
   },
   button: {
-    padding: 0,
+    borderWidth: 1,
     borderColor: 'rgba(255,255,255,0.5)',
     justifyContent: 'center',
+    height: 44
   },
   text: {
     alignSelf: 'center',
     backgroundColor: 'transparent',
-    color: 'rgba(255,255,255,0.5)'
+    color: 'rgba(255,255,255,1.0)'
   },
   bgFill: {
     position: 'absolute',
-    top: -6,
+    top: 0,
     left: 0,
     height: 44
   }

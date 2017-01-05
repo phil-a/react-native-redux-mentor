@@ -7,7 +7,7 @@ import { extractDates } from '../helpers';
 class GoalView extends Component {
 
   render() {
-    const { name, desc, quantity, frequency, category, created_at, dates_completed } = this.props.goal;
+    const { name, desc, quantity, frequency, category, imageUrl, created_at, dates_completed } = this.props.goal;
     const completed_array = extractDates(dates_completed);
     return (
       <ScrollView>
@@ -16,6 +16,7 @@ class GoalView extends Component {
         <Text>Quantity: {quantity}</Text>
         <Text>Frequency: {frequency}</Text>
         <Text>Category: {category}</Text>
+        <Text>ImageUrl: {imageUrl}</Text>
         <Text>Created at: {created_at}</Text>
         <Text>Completed: {completed_array}</Text>
         <Calendar

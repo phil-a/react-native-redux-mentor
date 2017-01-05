@@ -10,8 +10,8 @@ class GoalCreate extends Component {
 
   onButtonPress(){
     let created_at = moment().format();
-    const { name, desc, category, quantity, frequency } = this.props;
-    this.props.goalCreate({ name, desc, category: category || 'Default', quantity, frequency, created_at })
+    const { name, desc, category, quantity, frequency, imageUrl } = this.props;
+    this.props.goalCreate({ name, desc, category: category || 'Default', quantity, frequency, imageUrl, created_at })
   }
 
   render() {
@@ -29,8 +29,8 @@ class GoalCreate extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { name, desc, category, quantity, frequency } = state.goalForm;
-  return { name, desc, category, quantity, frequency }
+  const { name, desc, category, quantity, frequency, imageUrl } = state.goalForm;
+  return { name, desc, category, quantity, frequency, imageUrl }
 };
 
 export default connect(mapStateToProps, { goalUpdate, goalCreate })(GoalCreate);
