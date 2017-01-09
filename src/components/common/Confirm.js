@@ -2,6 +2,7 @@ import React from 'react';
 import { Text, View, Modal } from 'react-native';
 import { CardSection } from './CardSection';
 import { Button } from './Button';
+import { MKColor } from 'react-native-material-kit';
 
 const Confirm = ({ children, visible, onAccept, onDecline }) => {
   const { containerStyle, cardSectionStyle, textStyle } = styles;
@@ -20,8 +21,8 @@ const Confirm = ({ children, visible, onAccept, onDecline }) => {
         </Text>
       </CardSection>
       <CardSection>
-        <Button onPress={onAccept}>Yes</Button>
-        <Button onPress={onDecline}>No</Button>
+        <Button onPress={onAccept} backgroundColor={'#F44336'}>Yes</Button>
+        <Button onPress={onDecline} backgroundColor={MKColor.Silver} textColor={MKColor.Grey}>Cancel</Button>
       </CardSection>
     </View>
     </Modal>

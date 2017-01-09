@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { categoryUpdate, categoryCreate } from '../actions';
 import { Card, CardSection, Button } from './common';
 import CategoryForm from './CategoryForm';
+import { MKColor } from 'react-native-material-kit';
 
 class CategoryCreate extends Component {
 
@@ -18,7 +19,7 @@ class CategoryCreate extends Component {
       <Card>
         <CategoryForm {...this.props} />
         <CardSection>
-          <Button onPress={this.onButtonPress.bind(this)}>
+          <Button onPress={this.onButtonPress.bind(this)} backgroundColor={MKColor.Green}>
             Create Category
           </Button>
         </CardSection>

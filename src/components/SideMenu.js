@@ -1,39 +1,43 @@
 import React from 'react';
 import { TouchableOpacity, Text, View, Image } from 'react-native';
+import { Button } from './common';
+import { MKButton, MKColor } from 'react-native-material-kit';
 
 const SideMenu = ({ onClosePress, children }) => {
   const { buttonStyle, textStyle } = styles;
-
   return (
-    <View style={{flex: 1}}>
-    <View style={{flex: 8, alignItems: 'stretch'}}>
-      <Image
-      resizeMode='cover'
-      source={{uri: 'http://i.imgur.com/BgjOLRJ.jpg'}}
-      style={styles.imageStyle}
-      />
-    </View>
-    <TouchableOpacity onPress={onClosePress} style={buttonStyle}>
-      <Text style={textStyle}>
-        Button 1
-      </Text>
-    </TouchableOpacity>
-    <TouchableOpacity onPress={onClosePress} style={buttonStyle}>
-      <Text style={textStyle}>
-        Button 2
-      </Text>
-    </TouchableOpacity>
-    <TouchableOpacity onPress={onClosePress} style={buttonStyle}>
-      <Text style={textStyle}>
-        Button 3
-      </Text>
-    </TouchableOpacity>
-    <TouchableOpacity onPress={onClosePress} style={buttonStyle}>
-      <Text style={textStyle}>
-        Button 4
-      </Text>
-    </TouchableOpacity>
-    <View style={{flex: 4}}></View>
+    <View style={{flex: 1, justifyContent: 'space-between'}}>
+      <View style={{flex: 8, alignItems: 'stretch'}}>
+        <Image
+        resizeMode='cover'
+        source={{uri: 'http://i.imgur.com/BgjOLRJ.jpg'}}
+        style={styles.imageStyle}
+        />
+      </View>
+      <Button
+        onPress={() =>
+        {
+          onClosePress();
+        }}
+        backgroundColor={MKColor.Indigo}>
+        Settings
+      </Button>
+      <Button
+        onPress={() =>
+        {
+          onClosePress();
+        }}
+        backgroundColor={MKColor.BlueGrey}>
+        Close Menu
+      </Button>
+      <Button
+        onPress={() =>
+        {
+          onClosePress();
+        }}
+        backgroundColor={MKColor.Red}>
+        Sign Out
+      </Button>
     </View>
   );
 };

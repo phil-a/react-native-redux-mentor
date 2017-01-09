@@ -5,6 +5,7 @@ import { goalUpdate, goalCreate } from '../actions';
 import { Card, CardSection, Button } from './common';
 import GoalForm from './GoalForm';
 import moment from 'moment';
+import { MKColor } from 'react-native-material-kit';
 
 class GoalCreate extends Component {
 
@@ -19,7 +20,7 @@ class GoalCreate extends Component {
       <Card>
         <GoalForm {...this.props} />
         <CardSection>
-          <Button onPress={this.onButtonPress.bind(this)}>
+          <Button onPress={this.onButtonPress.bind(this)} backgroundColor={MKColor.Green}>
             Create Goal
           </Button>
         </CardSection>

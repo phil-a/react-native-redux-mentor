@@ -5,6 +5,7 @@ import GoalForm from './GoalForm';
 import { goalUpdate, goalSave, goalNotSaved, goalDelete } from '../actions';
 import { Card, CardSection, Button, Confirm } from './common';
 import Communications from 'react-native-communications';
+import { MKColor } from 'react-native-material-kit';
 
 class GoalEdit extends Component {
   state = {showModal: false};
@@ -44,7 +45,7 @@ class GoalEdit extends Component {
         <GoalForm />
 
         <CardSection>
-          <Button onPress={this.onButtonPress.bind(this)}>
+          <Button onPress={this.onButtonPress.bind(this)} backgroundColor={MKColor.Blue}>
             Save Changes
           </Button>
         </CardSection>
@@ -55,7 +56,7 @@ class GoalEdit extends Component {
           </Button>
         </CardSection>
         <CardSection>
-          <Button onPress={() => this.setState({ showModal: !this.state.showModal })}>
+          <Button onPress={() => this.setState({ showModal: !this.state.showModal })} backgroundColor={'#F44336'}>
             Remove Goal
           </Button>
         </CardSection>
