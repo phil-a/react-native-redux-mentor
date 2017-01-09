@@ -5,6 +5,7 @@ import CategoryForm from './CategoryForm';
 import { categoryUpdate, categorySave, categoryNotSaved, categoryDelete } from '../actions';
 import { Card, CardSection, Button, Confirm } from './common';
 import Communications from 'react-native-communications';
+import { MKColor } from 'react-native-material-kit';
 
 class CategoryEdit extends Component {
   state = {showModal: false};
@@ -39,13 +40,13 @@ class CategoryEdit extends Component {
         <CategoryForm />
 
         <CardSection>
-          <Button onPress={this.onButtonPress.bind(this)}>
+          <Button onPress={this.onButtonPress.bind(this)} backgroundColor={MKColor.Blue}>
             Save Changes
           </Button>
         </CardSection>
 
         <CardSection>
-          <Button onPress={() => this.setState({ showModal: !this.state.showModal })}>
+          <Button onPress={() => this.setState({ showModal: !this.state.showModal })} backgroundColor={'#F44336'}>
             Remove Category
           </Button>
         </CardSection>

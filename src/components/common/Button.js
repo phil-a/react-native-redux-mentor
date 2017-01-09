@@ -1,34 +1,41 @@
 import React from 'react';
 import { TouchableOpacity, Text } from 'react-native';
+import { MKButton, MKColor } from 'react-native-material-kit';
 
-const Button = ({ onPress, children }) => {
+const Button = ({ onPress, children, backgroundColor, textColor }) => {
   const { buttonStyle, textStyle } = styles;
+  const buttonColor = backgroundColor || MKColor.Teal;
+  const copyStyle = { copyColor: { color: textColor || 'white' } };
 
   return (
-    <TouchableOpacity onPress={onPress} style={buttonStyle}>
-      <Text style={textStyle}>
-        {children}
+    <MKButton
+      backgroundColor={[MKColor.Teal], buttonColor}
+      shadowRadius={2}
+      shadowOffset={{width:0, height:2}}
+      shadowOpacity={.7}
+      shadowColor="black"
+      onPress={onPress}
+      style={buttonStyle}
+      >
+      <Text pointerEvents="none"
+            style={[textStyle, copyStyle.copyColor]}>
+        { children }
       </Text>
-    </TouchableOpacity>
+    </MKButton>
   );
 };
 
 const styles = {
   textStyle: {
     alignSelf: 'center',
-    color: '#007aff',
     fontSize: 16,
     fontWeight: '600',
-    paddingVertical: 10
+    paddingVertical: 15,
   },
   buttonStyle: {
     flex: 1,
     alignSelf: 'stretch',
-    backgroundColor: '#fff',
-    borderRadius: 5,
-    borderWidth: 1,
-    borderColor: '#007aff',
-    marginHorizontal: 5
+    justifyContent: 'center',
   }
 };
 

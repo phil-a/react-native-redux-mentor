@@ -42,13 +42,13 @@ class CategoryForm extends Component {
                   oldColor={this.props.color}
                   onColorSelected={value => this.setColorInForm(value)}
                   onOldColorSelected={value => this.setColorInForm(value)}
-                  style={{flex: 1}}
+                  style={{flex: 8}}
                 />
-                  <TouchableOpacity onPress={() => {
+                  <Button onPress={() => {
                     this.setModalVisible(!this.state.modalVisible)
                   }}>
-                    <Text>Hide Modal</Text>
-                  </TouchableOpacity>
+                    Hide Modal
+                  </Button>
                 </View>
               </Modal>
 
