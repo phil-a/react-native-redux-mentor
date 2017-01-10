@@ -8,6 +8,7 @@ import GoalEdit from './components/GoalEdit';
 import GoalView from './components/GoalView';
 import CategoryCreate from './components/CategoryCreate';
 import CategoryEdit from './components/CategoryEdit';
+import Settings from './components/Settings';
 import Drawer from 'react-native-drawer';
 import SideMenu from './components/SideMenu';
 import { MKButton, MKColor } from 'react-native-material-kit';
@@ -81,6 +82,11 @@ class RouterComponent extends Component {
               key="categoryEdit"
               component={CategoryEdit}
               title="Edit Category"
+            />
+            <Scene
+              key="settings"
+              component={Settings}
+              title="Settings"
             />
           </Scene>
         </Router>
