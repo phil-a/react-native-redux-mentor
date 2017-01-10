@@ -2,7 +2,7 @@ import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { ListView, View } from 'react-native';
-import { goalsFetch, categoriesFetch } from '../actions';
+import { goalsFetch, categoriesFetch, settingsFetch } from '../actions';
 import GoalListItem from './GoalListItem';
 import CategoryListItem from './CategoryListItem';
 
@@ -11,6 +11,7 @@ class GoalList extends Component {
   componentWillMount() {
     this.props.goalsFetch();
     this.props.categoriesFetch();
+    this.props.settingsFetch();
     this.createDataSource(this.props);
     this.createCategorySource(this.props);
   }
@@ -67,4 +68,4 @@ const mapStateToProps = state => {
   return { goals, categories };
 }
 
-export default connect(mapStateToProps, { goalsFetch, categoriesFetch })(GoalList);
+export default connect(mapStateToProps, { goalsFetch, categoriesFetch, settingsFetch })(GoalList);

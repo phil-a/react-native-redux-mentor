@@ -4,6 +4,8 @@ export const LOGIN_USER_SUCCESS = 'login_user_success';
 export const LOGIN_USER_FAIL = 'login_user_fail';
 export const LOGIN_USER = 'login_user';
 
+export const SETTINGS_FETCH_SUCCESS = 'settings_fetch_success';
+export const SETTINGS_SAVE_SUCCESS = 'settings_save_success';
 export const DISPLAY_TYPE_CHANGED = 'display_type_changed';
 
 export const GOAL_UPDATE = 'goal_update';
