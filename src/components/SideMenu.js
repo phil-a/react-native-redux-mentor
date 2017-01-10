@@ -2,6 +2,7 @@ import React from 'react';
 import { TouchableOpacity, Text, View, Image } from 'react-native';
 import { Button } from './common';
 import { MKButton, MKColor } from 'react-native-material-kit';
+import { Actions } from 'react-native-router-flux';
 
 const SideMenu = ({ onClosePress, children }) => {
   const { buttonStyle, textStyle } = styles;
@@ -17,6 +18,7 @@ const SideMenu = ({ onClosePress, children }) => {
       <Button
         onPress={() =>
         {
+          Actions.settings();
           onClosePress();
         }}
         backgroundColor={MKColor.Indigo}>
