@@ -6,6 +6,7 @@ import { displayTypeChanged, settingsSave, settingsFetch } from '../actions';
 import { Actions } from 'react-native-router-flux';
 import { MKSwitch, MKColor } from 'react-native-material-kit';
 import { Card, CardSection, Button } from './common';
+import { Spacer } from './common';
 
 class Settings extends Component {
   componentWillMount() {
@@ -43,34 +44,37 @@ class Settings extends Component {
 
   render() {
     return (
-      <Card>
-        <CardSection>
-          {
-            (this.props.isTypeGrid)
-            ?
-            this.renderGridSample()
-            :
-            this.renderCarouselSample()
-          }
-          <View style={styles.switchStyle}>
-            <MKSwitch
-                checked={this.props.isTypeGrid}
-                trackSize={30}
-                trackLength={52}
-                onColor="rgba(255,152,0,.3)"
-                thumbOnColor={MKColor.Orange}
-                rippleColor="rgba(255,152,0,.2)"
-                onPress={() => console.log('orange switch pressed')}
-                onCheckedChange={(e) => this.props.displayTypeChanged(e.checked)}
-            />
-          </View>
-        </CardSection>
-        <CardSection>
-          <Button onPress={this.onSavePress.bind(this)}>
-            Save Settings
-          </Button>
-        </CardSection>
-      </Card>
+      <View>
+        <Spacer />
+        <Card>
+          <CardSection>
+            {
+              (this.props.isTypeGrid)
+              ?
+              this.renderGridSample()
+              :
+              this.renderCarouselSample()
+            }
+            <View style={styles.switchStyle}>
+              <MKSwitch
+                  checked={this.props.isTypeGrid}
+                  trackSize={30}
+                  trackLength={52}
+                  onColor="rgba(255,152,0,.3)"
+                  thumbOnColor={MKColor.Orange}
+                  rippleColor="rgba(255,152,0,.2)"
+                  onPress={() => console.log('orange switch pressed')}
+                  onCheckedChange={(e) => this.props.displayTypeChanged(e.checked)}
+              />
+            </View>
+          </CardSection>
+          <CardSection>
+            <Button onPress={this.onSavePress.bind(this)}>
+              Save Settings
+            </Button>
+          </CardSection>
+        </Card>
+      </View>
     )
   }
 }

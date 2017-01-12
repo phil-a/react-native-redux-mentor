@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Text } from 'react-native';
+import { Text, View } from 'react-native';
 import { emailChanged, passwordChanged, loginUser } from '../actions';
-import { Card, CardSection, Input, Button, Spinner } from './common';
+import { Card, CardSection, Input, Button, Spinner, Spacer } from './common';
 import { Actions } from 'react-native-router-flux';
 import firebase from 'firebase';
 
@@ -53,6 +53,8 @@ class LoginForm extends Component {
 
   render() {
     return (
+      <View>
+        <Spacer />
         <Card>
           <CardSection>
             <Input
@@ -79,6 +81,7 @@ class LoginForm extends Component {
           {this.renderError()}
           {this.renderSpinner()}
         </Card>
+      </View>
     );
   }
 }

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View } from 'react-native';
 import { connect } from 'react-redux';
 import { goalUpdate, goalCreate } from '../actions';
-import { Card, CardSection, Button } from './common';
+import { Card, CardSection, Button, Spacer } from './common';
 import GoalForm from './GoalForm';
 import moment from 'moment';
 import { MKColor } from 'react-native-material-kit';
@@ -17,14 +17,17 @@ class GoalCreate extends Component {
 
   render() {
     return (
-      <Card>
-        <GoalForm {...this.props} />
-        <CardSection>
-          <Button onPress={this.onButtonPress.bind(this)} backgroundColor={MKColor.Green}>
-            Create Goal
-          </Button>
-        </CardSection>
-      </Card>
+      <View>
+        <Spacer />
+        <Card>
+          <GoalForm {...this.props} />
+          <CardSection>
+            <Button onPress={this.onButtonPress.bind(this)} backgroundColor={MKColor.Green}>
+              Create Goal
+            </Button>
+          </CardSection>
+        </Card>
+      </View>
     );
   }
 }

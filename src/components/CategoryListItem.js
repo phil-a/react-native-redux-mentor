@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Text, TouchableWithoutFeedback, TouchableOpacity, View, StyleSheet, Image} from 'react-native';
+import { Platform, Text, TouchableWithoutFeedback, TouchableOpacity, View, StyleSheet, Image} from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { goalsFetch, goalComplete } from '../actions';
 import { Card, CardSection, Button, PressAndHoldButton } from './common';
@@ -10,6 +10,7 @@ import FlipCard from 'react-native-flip-card'
 import LinearGradient from 'react-native-linear-gradient';
 import moment from 'moment';
 import { extractDates } from '../helpers';
+import { Spacer } from './common';
 
 class CategoryListItem extends Component {
 
@@ -20,13 +21,14 @@ class CategoryListItem extends Component {
   colorStyle = function(color) {
     return {
       backgroundColor: color,
+      opacity: 0.8
     }
   }
 
   completedTodayStyle = function(dates_completed, color) {
     const dates_array = extractDates(dates_completed);
     const today = moment().format("YYYY-MM-DD");
-    return (dates_array[dates_array.length-1] == today) ? { borderColor: color } : { borderColor: 'lightgrey' }
+    return (dates_array[dates_array.length-1] == today) ? { tintColor: color } : { }
   }
 
   onRowPress() {
@@ -50,7 +52,7 @@ class CategoryListItem extends Component {
     return (
       <FlipCard
         key={i}
-        style={[styles.item, this.completedTodayStyle(data.dates_completed, this.props.category.color)]}
+        style={[styles.item]}
         friction={4}
         perspective={900}
         flipHorizontal={false}
@@ -68,7 +70,7 @@ class CategoryListItem extends Component {
   _renderFront(data) {
     return (
       <Image
-      style={styles.goalImage}
+      style={[styles.goalImage, this.completedTodayStyle(data.dates_completed, this.props.category.color)]}
       resizeMode='cover'
       source={{uri: data.imageUrl}}
       >
@@ -135,16 +137,23 @@ class CategoryListItem extends Component {
 
   render() {
     return (
-      <Card>
-        {this.renderCategory()}
-        <Grid
-          style={styles.list}
-          renderItem={this._renderItem}
-          data={this.props.goals.filter((goal) => goal.category === this.props.category.name)}
-          itemsPerRow={2}
-          itemHasChanged={(d1, d2) => d1 !== d2}
-        />
-      </Card>
+      <View>
+        <Spacer />
+        <View style={{backgroundColor: 'white'}}>
+          <LinearGradient colors={['rgba(0,0,0,1)', 'rgba(0,0,0,0)']} style={styles.linearGradient}>
+          {this.renderCategory()}
+          </LinearGradient>
+          <View style={{borderWidth: 5, borderColor: this.props.category.color, opacity: 0.8}}>
+          <Grid
+            style={styles.list}
+            renderItem={this._renderItem}
+            data={this.props.goals.filter((goal) => goal.category === this.props.category.name)}
+            itemsPerRow={2}
+            itemHasChanged={(d1, d2) => d1 !== d2}
+          />
+          </View>
+        </View>
+      </View>
     );
   }
 }
@@ -163,9 +172,9 @@ const styles = {
   },
   item: {
     flex: 1,
-    height: 160,
-    margin: 5,
-    borderWidth: 5,
+    height: 150,
+    margin: 0,
+    borderWidth: 0,
   },
   list: {
     flex: 1,

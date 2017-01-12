@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { AsyncStorage } from 'react-native';
+import { Platform, AsyncStorage } from 'react-native';
 import { Provider, connect } from 'react-redux';
 import { persistStore } from 'redux-persist';
 import configureStore from './store/configureStore';
 import firebase from 'firebase';
 import Config from 'react-native-config';
 import Router from './Router';
+import EStyleSheet from 'react-native-extended-stylesheet';
 
 const RouterWithRedux = connect()(Router);
 const store = configureStore(this.state);
@@ -54,5 +55,11 @@ class App extends Component {
     );
   }
 }
+
+EStyleSheet.build({
+  topSpace: Platform.OS === 'ios' ? 65 : 54,
+  lightNav: 'rgba(255,255,255,0.8)',
+  darkNav: 'rgba(0,0,0,0.8)',
+});
 
 export default App;

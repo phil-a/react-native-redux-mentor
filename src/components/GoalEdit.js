@@ -1,9 +1,10 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
+import { View } from 'react-native';
 import { connect } from 'react-redux';
 import GoalForm from './GoalForm';
 import { goalUpdate, goalSave, goalNotSaved, goalDelete } from '../actions';
-import { Card, CardSection, Button, Confirm } from './common';
+import { Card, CardSection, Button, Confirm, Spacer } from './common';
 import Communications from 'react-native-communications';
 import { MKColor } from 'react-native-material-kit';
 
@@ -41,33 +42,36 @@ class GoalEdit extends Component {
 
   render() {
     return (
-      <Card>
-        <GoalForm />
+      <View>
+        <Spacer />
+        <Card>
+          <GoalForm />
 
-        <CardSection>
-          <Button onPress={this.onButtonPress.bind(this)} backgroundColor={MKColor.Blue}>
-            Save Changes
-          </Button>
-        </CardSection>
+          <CardSection>
+            <Button onPress={this.onButtonPress.bind(this)} backgroundColor={MKColor.Blue}>
+              Save Changes
+            </Button>
+          </CardSection>
 
-        <CardSection>
-          <Button onPress={this.onTextPress.bind(this)}>
-            Text Session
-          </Button>
-        </CardSection>
-        <CardSection>
-          <Button onPress={() => this.setState({ showModal: !this.state.showModal })} backgroundColor={'#F44336'}>
-            Remove Goal
-          </Button>
-        </CardSection>
-        <Confirm
-          visible={this.state.showModal}
-          onAccept={this.onAccept.bind(this)}
-          onDecline={this.onDecline.bind(this)}
-        >
-          Are you sure you want to delete this?
-        </Confirm>
-      </Card>
+          <CardSection>
+            <Button onPress={this.onTextPress.bind(this)}>
+              Text Session
+            </Button>
+          </CardSection>
+          <CardSection>
+            <Button onPress={() => this.setState({ showModal: !this.state.showModal })} backgroundColor={'#F44336'}>
+              Remove Goal
+            </Button>
+          </CardSection>
+          <Confirm
+            visible={this.state.showModal}
+            onAccept={this.onAccept.bind(this)}
+            onDecline={this.onDecline.bind(this)}
+          >
+            Are you sure you want to delete this?
+          </Confirm>
+        </Card>
+      </View>
     );
   }
 }

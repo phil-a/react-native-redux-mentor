@@ -12,6 +12,8 @@ import Settings from './components/Settings';
 import Drawer from 'react-native-drawer';
 import SideMenu from './components/SideMenu';
 import { MKButton, MKColor } from 'react-native-material-kit';
+import EStyleSheet from 'react-native-extended-stylesheet';
+import layout from './styles/layout';
 
 class RouterComponent extends Component {
 
@@ -46,6 +48,7 @@ class RouterComponent extends Component {
               key="login"
               component={LoginForm}
               title="Please Login"
+              navigationBarStyle={layout.goalViewNav}
               initial
             />
           </Scene>
@@ -53,40 +56,47 @@ class RouterComponent extends Component {
             <Scene
               key="goalList"
               component={GoalList}
-              title="Goals"
+              title=""
               rightTitle="Add"
               onRight={() => Actions.goalCreate()}
               showMenu={this.state.showMenu}
+              navigationBarStyle={layout.goalViewNav}
             />
             <Scene
               key="goalCreate"
               component={GoalCreate}
               title="Create Goal"
+              navigationBarStyle={layout.goalViewNav}
             />
             <Scene
               key="goalEdit"
               component={GoalEdit}
               title="Edit Goal"
+              navigationBarStyle={layout.goalViewNav}
             />
             <Scene
               key="goalView"
               component={GoalView}
-              title="View Goal"
+              title=""
+              navigationBarStyle={layout.goalViewNav}
             />
             <Scene
               key="categoryCreate"
               component={CategoryCreate}
               title="Create Category"
+              navigationBarStyle={layout.goalViewNav}
             />
             <Scene
               key="categoryEdit"
               component={CategoryEdit}
               title="Edit Category"
+              navigationBarStyle={layout.goalViewNav}
             />
             <Scene
               key="settings"
               component={Settings}
               title="Settings"
+              navigationBarStyle={layout.goalViewNav}
             />
           </Scene>
         </Router>
@@ -96,10 +106,10 @@ class RouterComponent extends Component {
 
 };
 
-const styles = {
+const styles = EStyleSheet.create({
   navStyle: {
-    paddingTop: Platform.OS === 'ios' ? 65 : 54
-  }
-};
+
+  },
+});
 
 export default RouterComponent;
