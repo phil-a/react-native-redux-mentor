@@ -60,6 +60,7 @@ EStyleSheet.build({
   topSpace: Platform.OS === 'ios' ? 65 : 54,
   lightNav: 'rgba(255,255,255,0.8)',
   darkNav: 'rgba(0,0,0,0.8)',
+  navText: 'green',
 });
 
 export default App;
