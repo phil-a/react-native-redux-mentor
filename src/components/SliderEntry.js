@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import styles from '../styles/SliderEntry.style';
+import { Actions } from 'react-native-router-flux';
 
 export default class SliderEntry extends Component {
 
@@ -10,14 +11,17 @@ export default class SliderEntry extends Component {
         imageUrl: PropTypes.string
     };
 
+    onPress(goal) {
+      Actions.goalView({ goal: this.props });
+    }
+
     render () {
         const { name, desc, imageUrl } = this.props;
-
         return (
             <TouchableOpacity
               activeOpacity={0.9}
               style={styles.slideInnerContainer}
-              onPress={() => { alert(`You've clicked '${name}'`); }}
+              onPress={() => { this.onPress(this.props) }}
               >
                 <View style={styles.imageContainer}>
                     <Image

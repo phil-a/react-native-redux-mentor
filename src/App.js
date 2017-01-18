@@ -58,7 +58,8 @@ class App extends Component {
 
 EStyleSheet.build({
   topSpace: Platform.OS === 'ios' ? 65 : 54,
-  lightNav: 'rgba(255,255,255,0.8)',
+  smallTopSpace: Platform.OS === 'ios' ? 20 : 0,
+  lightNav: 'rgba(255,255,255,0.0)',
   darkNav: 'rgba(0,0,0,0.8)',
   navText: 'green',
 });

@@ -12,7 +12,8 @@ export default EStyleSheet.create({
     paddingTop: '$topSpace',
   },
   goalViewNav: {
-    backgroundColor: '$lightNav'
+    backgroundColor: '$lightNav',
+    borderBottomWidth: 0,
   },
   navText: {
     color: '$navText'

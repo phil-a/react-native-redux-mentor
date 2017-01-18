@@ -7,3 +7,5 @@ export * from './Spinner';
 export * from './Confirm';
 export * from './PressAndHoldButton';
 export * from './Spacer';
+export * from './SmallSpacer';
+export * from './ModalShow';
