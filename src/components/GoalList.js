@@ -1,12 +1,13 @@
 import _ from 'lodash';
+import moment from 'moment';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Platform, ListView, View, Image, Text } from 'react-native';
-import { goalsFetch, categoriesFetch, settingsFetch } from '../actions';
+import { goalsFetch, categoriesFetch, settingsFetch, goalComplete } from '../actions';
 import GoalListItem from './GoalListItem';
 import CategoryListItem from './CategoryListItem';
 import SliderEntry from './SliderEntry';
-import { Spacer } from './common';
+import { Spacer, Button } from './common';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import Carousel from 'react-native-snap-carousel';
 import { sliderWidth, itemWidth } from '../styles/SliderEntry.style';
@@ -15,6 +16,7 @@ import sliderStyles from '../styles/Slider.style';
 
 
 class GoalList extends Component {
+  state = { selectedGoal: null, loaded: false };
   componentWillMount() {
     this.props.goalsFetch();
     this.props.categoriesFetch();
@@ -33,6 +35,9 @@ class GoalList extends Component {
       rowHasChanged: (r1, r2) => r1 !== r2
     });
     this.dataSource = ds.cloneWithRows(goals);
+    if ( (!this.state.loaded) && (this.props.goals.length > 0) ) {
+      this.setState({ loaded: true, selectedGoal: this.props.goals[0] });
+    }
   }
 
   createCategorySource({ categories }) {
@@ -52,6 +57,15 @@ class GoalList extends Component {
 
   renderCategoryRow(category) {
     return <CategoryListItem category={category} />;
+  }
+
+  onItemChange(itemData) {
+    this.setState({selectedGoal: itemData});
+  }
+
+  onGoalComplete(uid) {
+    let now = moment().format();
+    this.props.goalComplete({ completed_datetime: now, uid: uid });
   }
 
   render() {
@@ -75,7 +89,6 @@ class GoalList extends Component {
         <Spacer />
         <Carousel
           items={this.props.goals}
-          firstItem={2}
           inactiveSlideScale={0.94}
           inactiveSlideOpacity={0.6}
           renderItem={this.renderCarouselItem}
@@ -87,7 +100,13 @@ class GoalList extends Component {
           showsHorizontalScrollIndicator={false}
           snapOnAndroid={true}
           removeClippedSubviews={false}
+          onSnapToItem={(slideIndex, itemData) => this.onItemChange(itemData)}
         />
+        <View style={{ height: 75 }}>
+          <Button onPress={() => this.onGoalComplete(this.state.selectedGoal.uid)}>
+            Complete '{this.state.selectedGoal.name}'
+          </Button>
+        </View>
         </View>
       );
     }
@@ -109,4 +128,4 @@ const mapStateToProps = state => {
   return { goals, categories, settings };
 }
 
-export default connect(mapStateToProps, { goalsFetch, categoriesFetch, settingsFetch })(GoalList);
+export default connect(mapStateToProps, { goalsFetch, categoriesFetch, settingsFetch, goalComplete })(GoalList);
