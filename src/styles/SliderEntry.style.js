@@ -53,5 +53,10 @@ export default StyleSheet.create({
         color: colors.gray,
         fontSize: 12,
         fontStyle: 'italic'
+    },
+    checkWrapper: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center'
     }
 });

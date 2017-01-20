@@ -13,10 +13,12 @@ import Carousel from 'react-native-snap-carousel';
 import { sliderWidth, itemWidth } from '../styles/SliderEntry.style';
 import mainStyles from '../styles/index.style';
 import sliderStyles from '../styles/Slider.style';
-
+import { extractDates } from '../helpers';
 
 class GoalList extends Component {
+
   state = { selectedGoal: null, loaded: false };
+
   componentWillMount() {
     this.props.goalsFetch();
     this.props.categoriesFetch();
@@ -52,7 +54,7 @@ class GoalList extends Component {
   }
 
   renderCarouselItem(goal) {
-    return <SliderEntry {...goal} />;
+    return <SliderEntry {...goal} completed={this.completedToday(goal.dates_completed)} />;
   }
 
   renderCategoryRow(category) {
@@ -66,6 +68,12 @@ class GoalList extends Component {
   onGoalComplete(uid) {
     let now = moment().format();
     this.props.goalComplete({ completed_datetime: now, uid: uid });
+  }
+
+  completedToday(dates_completed) {
+    const dates_array = extractDates(dates_completed);
+    const today = moment().format("YYYY-MM-DD");
+    return (dates_array[dates_array.length-1] == today) ? true : false
   }
 
   render() {
@@ -91,7 +99,7 @@ class GoalList extends Component {
           items={this.props.goals}
           inactiveSlideScale={0.94}
           inactiveSlideOpacity={0.6}
-          renderItem={this.renderCarouselItem}
+          renderItem={this.renderCarouselItem.bind(this)}
           sliderWidth={sliderWidth}
           itemWidth={itemWidth}
           slideStyle={sliderStyles.slide}
